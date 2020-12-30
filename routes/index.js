@@ -18,6 +18,18 @@ router.get('/edit-teacher', function(req, res, next) {
     res.render('teachers/edit-teacher', { title: 'Express' });
 });
 
+router.get('/list-students', function(req, res, next) {
+    res.render('students/list-students', { title: 'Express' });
+});
+
+router.get('/add-student', function(req, res, next) {
+    res.render('students/add-student', { title: 'Express' });
+});
+
+router.get('/edit-student', function(req, res, next) {
+    res.render('students/edit-student', { title: 'Express' });
+});
+
 
 
 module.exports = router;
