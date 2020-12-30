@@ -30,6 +30,15 @@ router.get('/edit-student', function(req, res, next) {
     res.render('students/edit-student', { title: 'Express' });
 });
 
+router.get('/list-courses', function(req, res, next) {
+    res.render('courses/list-courses', { title: 'Express' });
+});
+
+router.get('/detail-course', function(req, res, next) {
+    res.render('courses/detail-course', { title: 'Express' });
+});
+
+
 
 
 module.exports = router;
