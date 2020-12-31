@@ -38,6 +38,22 @@ router.get('/detail-course', function(req, res, next) {
     res.render('courses/detail-course', { title: 'Express' });
 });
 
+router.get('/list-root-categories', function(req, res, next) {
+    res.render('categories/list-root-categories', { title: 'Express' });
+});
+
+router.get('/list-categories', function(req, res, next) {
+    res.render('categories/list-categories', { title: 'Express' });
+});
+
+router.get('/add-category', function(req, res, next) {
+    res.render('categories/add-category', { title: 'Express' });
+});
+
+router.get('/edit-category', function(req, res, next) {
+    res.render('categories/edit-category', { title: 'Express' });
+});
+
 
 
 
