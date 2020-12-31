@@ -54,6 +54,16 @@ router.get('/edit-category', function(req, res, next) {
     res.render('categories/edit-category', { title: 'Express' });
 });
 
+router.get('/user-info', function(req, res, next) {
+    res.render('users/user-info', { title: 'Express' });
+});
+
+router.get('/login', function(req, res, next) {
+    res.render('users/login', { title: 'Express' });
+});
+
+
+
 
 
 
