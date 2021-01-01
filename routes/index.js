@@ -9,9 +9,9 @@ router.get('/', function(req, res, next) {
 
 router.get('/list-teachers', teacherController.teacher_list);
 
-router.get('/add-teacher', function(req, res, next) {
-    res.render('teachers/add-teacher', { title: 'Express' });
-});
+router.get('/add-teacher', teacherController.add_teacher);
+
+router.post('/add-teacher', teacherController.post_teacher);
 
 router.get('/edit-teacher', function(req, res, next) {
     res.render('teachers/edit-teacher', { title: 'Express' });
