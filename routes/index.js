@@ -13,9 +13,9 @@ router.get('/add-teacher', teacherController.add_teacher);
 
 router.post('/add-teacher', teacherController.post_teacher);
 
-router.get('/edit-teacher', function(req, res, next) {
-    res.render('teachers/edit-teacher', { title: 'Express' });
-});
+router.get('/list-teachers/edit-teacher/:id', teacherController.detail_teacher);
+
+router.post('/list-teachers/edit-teacher/:id', teacherController.edit_teacher);
 
 router.get('/list-students', function(req, res, next) {
     res.render('students/list-students', { title: 'Express' });
