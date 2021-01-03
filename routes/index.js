@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var teacherController = require('../controllers/teacherController');
+var studentController = require('../controllers/studentController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('users/index', { title: 'Express' });
 });
 
+/* teacher */
 router.get('/list-teachers', teacherController.teacher_list);
 
 router.get('/add-teacher', teacherController.add_teacher);
@@ -19,9 +21,8 @@ router.post('/list-teachers/edit-teacher/:id', teacherController.edit_teacher);
 
 router.get('/list-teachers/:id', teacherController.delete_teacher);
 
-router.get('/list-students', function(req, res, next) {
-    res.render('students/list-students', { title: 'Express' });
-});
+/* student */
+router.get('/list-students', studentController.student_list);
 
 router.get('/add-student', function(req, res, next) {
     res.render('students/add-student', { title: 'Express' });

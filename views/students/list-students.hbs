@@ -29,52 +29,83 @@
             </div>
         </div>
     </div>
-   <div class="product-status mg-b-15">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap drp-lst">
-                            <h4>Danh sách học viên</h4>
-                            <div class="add-product">
-                                <a href="add-student">Thêm học viên</a>
-                            </div>
-                            <div class="asset-inner">
-                                <table>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Họ và tên</th>
-                                        <th>Tên đăng nhập</th>
-                                        <th>Email</th>
-                                        <th>Cài đặt</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Nguyễn Thái Học</td>
-                                        <td>John Alva</td>
-                                        <td>admin@gmail.com</td>
-                                        <td>
-                                            <a href="edit-student"><button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
-                                            <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="custom-pagination">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
+    <div class="product-status mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="product-status-wrap drp-lst">
+                        <h4>Danh sách học viên</h4>
+                        <div class="add-product">
+                            <a href="add-student">Thêm học viên</a>
+                        </div>
+                        <div class="asset-inner">
+                            <table>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Họ và tên</th>
+                                    <th>Tên đăng nhập</th>
+                                    <th>Email</th>
+                                    <th>Cài đặt</th>
+                                </tr>
+                                {{#each student_list}}
+                                <tr>
+                                    <td>{{lookup ../num_order @index}}</td>
+                                    <td>{{name}}</td>
+                                    <td>{{username}}</td>
+                                    <td>{{email}}</td>
+                                    <td>
+                                        <a href="/list-students/edit-student/{{_id}}"><button data-toggle="tooltip"
+                                                title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o"
+                                                    aria-hidden="true"></i></button></a>
+                                        <button data-toggle="modal" data-target="#exampleModal{{_id}}" title="Trash"
+                                            class="pd-setting-ed"><i class="fa fa-trash-o"
+                                                aria-hidden="true"></i></button>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal{{_id}}" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Bạn có chắc muốn xoá học viên {{this.name}} này không?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="/list-students/{{_id}}"><button type="button"
+                                                                class="btn btn-primary">Xoá</button></a>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Đóng</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+                        <div class="custom-pagination">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                    {{#each page_number}}
+                                    <li class="page-item"><a class="page-link"
+                                            href="/list-teachers?page={{this}}">{{this}}</a></li>
+                                    {{/each}}
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     <div class="footer-copyright-area">
         <div class="container-fluid">
             <div class="row">
