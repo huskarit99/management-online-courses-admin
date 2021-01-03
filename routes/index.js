@@ -32,10 +32,9 @@ router.get('/list-students/edit-student/:id', studentController.detail_student);
 
 router.post('/list-students/edit-student/:id', studentController.edit_student);
 
-router.get('/edit-student', function(req, res, next) {
-    res.render('students/edit-student', { title: 'Express' });
-});
+router.get('/list-students/:id', studentController.delete_student);
 
+/* course */
 router.get('/list-courses', function(req, res, next) {
     res.render('courses/list-courses', { title: 'Express' });
 });
