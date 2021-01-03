@@ -29,3 +29,38 @@ exports.student_list = (req, res, next) => {
 
         });
 };
+exports.add_student = (req, res, next) => {
+    res.render('students/add-student');
+};
+
+exports.post_student = (req, res, next) => {
+    let email = req.body.email;
+    let name = req.body.name;
+    let username = req.body.username;
+    let password = '123456';
+    User.findOne({ email: email }, function(err, user) {
+        if (user !== null) {
+            res.render('students/add-student', { message: 'Email already exist' });
+        } else {
+            User.findOne({ username: username }, function(err, user) {
+                if (user !== null) {
+                    res.render('students/add-student', { message: 'Username already exist' });
+                } else {
+                    var salt = bcrypt.genSaltSync(10);
+                    user = new User({
+                        email: email,
+                        name: name,
+                        username: username,
+                        password: bcrypt.hashSync(password, salt),
+                        role: 2,
+                        status: 1
+                    });
+                    user.save(function(err, result) {
+                        if (err) return next(err);
+                    });
+                    res.redirect('/list-students');
+                }
+            });
+        }
+    });
+};

@@ -52,7 +52,8 @@ exports.post_teacher = (req, res, next) => {
                         name: name,
                         username: username,
                         password: bcrypt.hashSync(password, salt),
-                        role: 1
+                        role: 1,
+                        status: 1
                     });
                     user.save(function(err, result) {
                         if (err) return next(err);
