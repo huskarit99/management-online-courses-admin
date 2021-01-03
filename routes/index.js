@@ -17,6 +17,8 @@ router.get('/list-teachers/edit-teacher/:id', teacherController.detail_teacher);
 
 router.post('/list-teachers/edit-teacher/:id', teacherController.edit_teacher);
 
+router.get('/list-teachers/:id', teacherController.delete_teacher);
+
 router.get('/list-students', function(req, res, next) {
     res.render('students/list-students', { title: 'Express' });
 });

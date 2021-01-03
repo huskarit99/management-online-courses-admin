@@ -3,10 +3,10 @@ var bcrypt = require('bcrypt');
 
 exports.teacher_list = (req, res, next) => {
     let page = Number(req.query.page) || Number(1);
-    User.find({ role: 1 }).lean().skip(4 * page - 4).limit(4)
+    User.find({ role: 1, status: 1 }).lean().skip(4 * page - 4).limit(4)
         .exec(function(err, list_teachers) {
             if (err) { return next(err) };
-            User.count({ role: 1 }, function(err, count) {
+            User.count({ role: 1, status: 1 }, function(err, count) {
                 let num = 1 + 4 * (page - 1);
                 let num_order = [num];
                 let page_number = [1];
@@ -90,4 +90,15 @@ exports.edit_teacher = (req, res, next) => {
             res.render('teachers/edit-teacher', { message: 'User can not found' });
         }
     });
+}
+
+exports.delete_teacher = (req, res, next) => {
+    let id = req.params.id;
+    User.findOne({ _id: id }, function(err, user) {
+        if (err) return next(err);
+        user.status = 0;
+        console.log(user);
+        user.save(function(err, result) {});
+        res.redirect('/list-teachers');
+    })
 }
