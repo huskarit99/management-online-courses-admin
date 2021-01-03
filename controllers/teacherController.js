@@ -2,13 +2,31 @@ const User = require('../models/user');
 var bcrypt = require('bcrypt');
 
 exports.teacher_list = (req, res, next) => {
-    User.find({ role: 1 }).lean().exec(function(err, list_teachers) {
-        if (err) { return next(err) };
-        res.render('teachers/list-teachers', {
-            title: 'Danh sách giáo viên',
-            teacher_list: list_teachers
+    let page = Number(req.query.page) || Number(1);
+    User.find({ role: 1 }).lean().skip(4 * page - 4).limit(4)
+        .exec(function(err, list_teachers) {
+            if (err) { return next(err) };
+            User.count({ role: 1 }, function(err, count) {
+                let num = 1 + 4 * (page - 1);
+                let num_order = [num];
+                let page_number = [1];
+                let page_size = Math.ceil(count / 4);
+                for (let index = 2; index <= list_teachers.length + num - 1; index++) {
+                    num_order.push(index);
+                }
+                for (let index = 2; index <= page_size; index++) {
+                    page_number.push(index);
+                }
+                res.render('teachers/list-teachers', {
+                    title: 'Danh sách giáo viên',
+                    num_order: num_order,
+                    page: page,
+                    page_number: page_number,
+                    teacher_list: list_teachers
+                });
+            })
+
         });
-    });
 };
 
 exports.add_teacher = (req, res, next) => {
