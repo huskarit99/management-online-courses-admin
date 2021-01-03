@@ -28,6 +28,10 @@ router.get('/add-student', studentController.add_student);
 
 router.post('/add-student', studentController.post_student);
 
+router.get('/list-students/edit-student/:id', studentController.detail_student);
+
+router.post('/list-students/edit-student/:id', studentController.edit_student);
+
 router.get('/edit-student', function(req, res, next) {
     res.render('students/edit-student', { title: 'Express' });
 });

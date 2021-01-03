@@ -64,3 +64,30 @@ exports.post_student = (req, res, next) => {
         }
     });
 };
+exports.detail_student = (req, res, next) => {
+    const id = req.params.id;
+    User.findById(id).lean().exec(function(err, user) {
+        if (err) return next(err);
+        console.log(user);
+        res.render('students/edit-student', {
+            student: user
+        });
+    });
+}
+
+exports.edit_student = (req, res, next) => {
+    let email = req.body.email;
+    let name = req.body.name;
+    let username = req.body.username;
+    console.log(username)
+    User.findOne({ username: username }, function(err, user) {
+        if (user !== null) {
+            user.name = name;
+            user.email = email;
+            user.save(function(err, result) {});
+            res.redirect('/list-students');
+        } else {
+            res.render('students/edit-student', { message: 'User can not found' });
+        }
+    });
+}
