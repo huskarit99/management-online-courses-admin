@@ -2,9 +2,11 @@ var express = require('express');
 var router = express.Router();
 var teacherController = require('../controllers/teacherController');
 var studentController = require('../controllers/studentController');
+var categoryController = require('../controllers/categoryController');
+const category = require('../models/category');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     res.render('users/index', { title: 'Express' });
 });
 
@@ -35,41 +37,38 @@ router.post('/list-students/edit-student/:id', studentController.edit_student);
 router.get('/list-students/:id', studentController.delete_student);
 
 /* course */
-router.get('/list-courses', function(req, res, next) {
+router.get('/list-courses', function (req, res, next) {
     res.render('courses/list-courses', { title: 'Express' });
 });
 
-router.get('/detail-course', function(req, res, next) {
+router.get('/detail-course', function (req, res, next) {
     res.render('courses/detail-course', { title: 'Express' });
 });
 
-router.get('/list-root-categories', function(req, res, next) {
-    res.render('categories/list-root-categories', { title: 'Express' });
-});
+/* category */
+router.get('/list-root-categories', categoryController.list_root_categories);
 
-router.get('/list-categories', function(req, res, next) {
+router.get('/list-categories', function (req, res, next) {
     res.render('categories/list-categories', { title: 'Express' });
 });
 
-router.get('/add-category', function(req, res, next) {
+router.get('/add-category', function (req, res, next) {
     res.render('categories/add-category', { title: 'Express' });
 });
 
-router.get('/edit-category', function(req, res, next) {
+router.get('/edit-category', function (req, res, next) {
     res.render('categories/edit-category', { title: 'Express' });
 });
 
-router.get('/user-info', function(req, res, next) {
+
+/* admin */
+router.get('/user-info', function (req, res, next) {
     res.render('users/user-info', { title: 'Express' });
 });
 
-router.get('/login', function(req, res, next) {
+router.get('/login', function (req, res, next) {
     res.render('users/login', { title: 'Express' });
 });
-
-
-
-
 
 
 module.exports = router;

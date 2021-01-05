@@ -29,48 +29,54 @@
             </div>
         </div>
     </div>
-   <div class="product-status mg-b-15">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="product-status-wrap drp-lst">
-                            <h4>Danh sách lĩnh vực cấp 1</h4>
-                            <div class="add-product">
-                                <a href="add-category">Thêm lĩnh vực</a>
-                            </div>
-                            <div class="asset-inner">
-                                <table>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Tên lĩnh vực</th>
-                                        <th>Cài đặt</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Lập trình</td>
-                                        <td>
-                                            <a href="edit-category"><button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></a>
-                                            <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <div class="custom-pagination">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination">
-                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
+    <div class="product-status mg-b-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="product-status-wrap drp-lst">
+                        <h4>Danh sách lĩnh vực cấp 1</h4>
+                        <div class="add-product">
+                            <a href="add-category">Thêm lĩnh vực</a>
+                        </div>
+                        <div class="asset-inner">
+                            <table>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tên lĩnh vực</th>
+                                    <th>Cài đặt</th>
+                                </tr>
+                                {{#each listRender}}
+                                <tr>
+                                    <td>{{page}}</td>
+                                    <td>{{name}}</td>
+                                    <td>
+                                        <a href="edit-category"><button data-toggle="tooltip" title="Edit"
+                                                class="pd-setting-ed"><i class="fa fa-pencil-square-o"
+                                                    aria-hidden="true"></i></button></a>
+                                        <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i
+                                                class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </table>
+                        </div>
+                        <div class="custom-pagination">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                    {{#each page_number}}
+                                    <li class="page-item"><a class="page-link"
+                                            href="/list-root-categories?page={{this}}">{{this}}</a></li>
+                                    {{/each}}
+                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     <div class="footer-copyright-area">
         <div class="container-fluid">
             <div class="row">
