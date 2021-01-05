@@ -4,9 +4,9 @@ var bcrypt = require('bcrypt');
 exports.teacher_list = (req, res, next) => {
     let page = Number(req.query.page) || Number(1);
     User.find({ role: 1, status: 1 }).lean().skip(4 * page - 4).limit(4)
-        .exec(function(err, list_teachers) {
+        .exec(function (err, list_teachers) {
             if (err) { return next(err) };
-            User.count({ role: 1, status: 1 }, function(err, count) {
+            User.count({ role: 1, status: 1 }, function (err, count) {
                 let num = 1 + 4 * (page - 1);
                 let num_order = [num];
                 let page_number = [1];
@@ -38,11 +38,11 @@ exports.post_teacher = (req, res, next) => {
     let name = req.body.name;
     let username = req.body.username;
     let password = '123456';
-    User.findOne({ email: email }, function(err, user) {
+    User.findOne({ email: email }, function (err, user) {
         if (user !== null) {
             res.render('teachers/add-teacher', { message: 'Email already exist' });
         } else {
-            User.findOne({ username: username }, function(err, user) {
+            User.findOne({ username: username }, function (err, user) {
                 if (user !== null) {
                     res.render('teachers/add-teacher', { message: 'Username already exist' });
                 } else {
@@ -55,7 +55,7 @@ exports.post_teacher = (req, res, next) => {
                         role: 1,
                         status: 1
                     });
-                    user.save(function(err, result) {
+                    user.save(function (err, result) {
                         if (err) return next(err);
                     });
                     res.redirect('/list-teachers');
@@ -67,7 +67,7 @@ exports.post_teacher = (req, res, next) => {
 
 exports.detail_teacher = (req, res, next) => {
     const id = req.params.id;
-    User.findById(id).lean().exec(function(err, user) {
+    User.findById(id).lean().exec(function (err, user) {
         if (err) return next(err);
         console.log(user);
         res.render('teachers/edit-teacher', {
@@ -81,11 +81,11 @@ exports.edit_teacher = (req, res, next) => {
     let name = req.body.name;
     let username = req.body.username;
     console.log(username)
-    User.findOne({ username: username }, function(err, user) {
+    User.findOne({ username: username }, function (err, user) {
         if (user !== null) {
             user.name = name;
             user.email = email;
-            user.save(function(err, result) {});
+            user.save(function (err, result) { });
             res.redirect('/list-teachers');
         } else {
             res.render('teachers/edit-teacher', { message: 'User can not found' });
@@ -95,11 +95,11 @@ exports.edit_teacher = (req, res, next) => {
 
 exports.delete_teacher = (req, res, next) => {
     let id = req.params.id;
-    User.findOne({ _id: id }, function(err, user) {
+    User.findOne({ _id: id }, function (err, user) {
         if (err) return next(err);
         user.status = 0;
         console.log(user);
-        user.save(function(err, result) {});
+        user.save(function (err, result) { });
         res.redirect('/list-teachers');
     })
 }

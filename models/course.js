@@ -1,0 +1,11 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+var CourseSchema = new Schema({
+    name: { type: String, require: true, max: 50 },
+    categories: [{
+        name: { type: String, require: true, max: 50 }
+    }]
+});
+
+module.exports = mongoose.model('Course', CoureseSchema);
