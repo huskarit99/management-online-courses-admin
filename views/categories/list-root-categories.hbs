@@ -59,7 +59,7 @@
                                         </a>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
-                                        <a href="edit-category">
+                                        <a href="edit-category?rootid={{_id}}">
                                             <button data-toggle="tooltip" title="Edit" class="pd-setting-ed">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </button>
@@ -96,7 +96,8 @@
                                                                 <td>{{page}}</td>
                                                                 <td>{{name}} </td>
                                                                 <td>
-                                                                    <a href="edit-category">
+                                                                    <a
+                                                                        href="edit-category?rootid={{../_id}}&childid={{_id}}">
                                                                         <button data-toggle="tooltip" title="Edit"
                                                                             class="pd-setting-ed">
                                                                             <i class="fa fa-pencil-square-o"

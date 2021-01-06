@@ -48,17 +48,12 @@ router.get('/detail-course', function (req, res, next) {
 /* category */
 router.get('/list-root-categories', categoryController.list_root_categories);
 
-router.get('/list-categories', function (req, res, next) {
-    res.render('categories/list-categories', { title: 'Express' });
-});
-
 router.get('/add-category', function (req, res, next) {
     res.render('categories/add-category', { title: 'Express' });
 });
 
-router.get('/edit-category', function (req, res, next) {
-    res.render('categories/edit-category', { title: 'Express' });
-});
+router.get('/edit-category', categoryController.edit_category);
+router.post('/edit-category', categoryController.post_category);
 
 
 /* admin */

@@ -1,4 +1,3 @@
-const category = require('../models/category');
 const Category = require('../models/category');
 
 exports.list_root_categories = (req, res, next) => {
@@ -35,15 +34,33 @@ exports.list_root_categories = (req, res, next) => {
         });
 }
 
-exports.list_categories = (req, res, next) => {
-    res.render('categories/list-categories');
+exports.edit_category = (req, res, next) => {
+    const rootId = req.query.rootid;
+    Category.findById(rootId)
+        .lean()
+        .exec((err, rootCategory) => {
+            if (err) {
+                next(err);
+            }
+            console.log(rootCategory.name);
+            res.render('categories/edit-category', {
+                name: rootCategory.name
+            });
+        });
+
+    // if (req.query.childid) {
+    //     const childId = req.query.childid;
+
+    // } else {
+
+    // }
 }
+
+exports.post_category = (req, res, next) => {
+
+}
+
 
 exports.add_category = (req, res, next) => {
     res.render('categories/add-category');
 }
-
-exports.edit_category = (req, res, next) => {
-    res.render('categories/edit-category');
-}
-
