@@ -17,7 +17,6 @@ exports.list_root_categories = (req, res, next) => {
                     listCategoriesInOnePage.push(data);
                 }
                 if (i / 4 == Math.floor(i / 4)) {
-                    console.log(i / 4);
                     page_number.push((i / 4) + 1);
                 }
             }

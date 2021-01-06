@@ -38,55 +38,117 @@
                         <div class="add-product">
                             <a href="add-category">Thêm lĩnh vực</a>
                         </div>
-                        <div class="asset-inner">
-                            <table>
+                        <table class="table">
+                            <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Tên lĩnh vực</th>
-                                    <th>Cài đặt</th>
+                                    <th style="text-align: center; vertical-align: middle;">Xem chi tiết</th>
+                                    <th style="text-align: center; vertical-align: middle;">Cài đặt</th>
                                 </tr>
+                            </thead>
+                            <tbody>
                                 {{#each listCategoriesInOnePage}}
                                 <tr>
-                                    <td>{{page}}</td>
-                                    <td>{{name}}</td>
-                                    <td>
-                                        <a href="edit-category"><button data-toggle="tooltip" title="Edit"
-                                                class="pd-setting-ed"><i class="fa fa-pencil-square-o"
-                                                    aria-hidden="true"></i></button></a>
-                                        <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i
-                                                class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <td>{{page}} </td>
+                                    <td>{{name}} </td>
+                                    <td class="text-center" style="text-align: center; vertical-align: middle;">
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                            href="#collapse{{page}}" aria-expanded="true" aria-controls="collapse0">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <a href="edit-category">
+                                            <button data-toggle="tooltip" title="Edit" class="pd-setting-ed">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </button>
+                                        </a>
+                                        <button data-toggle="tooltip" title="Trash" class="pd-setting-ed">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" class="padding-fix text-center">
+                                        <div id="collapse{{page}}" class="order-details panel-collapse out collapse"
+                                            role="tabpanel" aria-labelledby="heading0" aria-expanded="false"
+                                            style="height: 0px;">
+                                            <input type="hidden"
+                                                name="ctl00$ContentPlaceHolderContent$ListViewOrders$ctrl0$HiddenFieldOrderId"
+                                                id="ContentPlaceHolderContent_ListViewOrders_HiddenFieldOrderId_0"
+                                                value="2">
+
+                                            <div class="items">
+                                                <div>
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No</th>
+                                                                <th>Tên lĩnh vực</th>
+                                                                <th>
+                                                                    Cài đặt</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {{#each categories}}
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td>{{name}} </td>
+                                                                <td>
+                                                                    <a href="edit-category">
+                                                                        <button data-toggle="tooltip" title="Edit"
+                                                                            class="pd-setting-ed">
+                                                                            <i class="fa fa-pencil-square-o"
+                                                                                aria-hidden="true"></i>
+                                                                        </button>
+                                                                    </a>
+                                                                    <button data-toggle="tooltip" title="Trash"
+                                                                        class="pd-setting-ed">
+                                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                            {{/each}}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                                 {{/each}}
-                            </table>
-                        </div>
-                        <div class="custom-pagination">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                                    {{#each page_number}}
-                                    <li class="page-item"><a class="page-link"
-                                            href="/list-root-categories?page={{this}}">{{this}}</a></li>
-                                    {{/each}}
-                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                </ul>
-                            </nav>
-                        </div>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="custom-pagination">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                {{#each page_number}}
+                                <li class="page-item"><a class="page-link"
+                                        href="/list-root-categories?page={{this}}">{{this}}</a>
+                                </li>
+                                {{/each}}
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="footer-copyright-area">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer-copy-right">
-                        <p>Copyright © 2018. All rights reserved. Template by <a
-                                href="https://colorlib.com/wp/templates/">Colorlib</a></p>
-                    </div>
+</div>
+<div class="footer-copyright-area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer-copy-right">
+                    <p>Copyright © 2018. All rights reserved. Template by <a
+                            href="https://colorlib.com/wp/templates/">Colorlib</a></p>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
