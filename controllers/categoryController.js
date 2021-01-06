@@ -1,3 +1,4 @@
+const category = require('../models/category');
 const Category = require('../models/category');
 
 exports.list_root_categories = (req, res, next) => {
@@ -14,6 +15,13 @@ exports.list_root_categories = (req, res, next) => {
                 if (Math.floor(i / 4) == page - 1) {
                     const data = listRootCategories[i];
                     data['page'] = i + 1;
+                    if (data.categories) {
+                        for (let j = 0; j < data.categories.length; j++) {
+                            var tmp = data.categories[j];
+                            tmp['page'] = j + 1;
+                            data.categories[j] = tmp;
+                        }
+                    }
                     listCategoriesInOnePage.push(data);
                 }
                 if (i / 4 == Math.floor(i / 4)) {
