@@ -53,7 +53,7 @@ router.get('/add-category', function (req, res, next) {
 });
 
 router.get('/edit-category', categoryController.edit_category);
-router.post('/edit-category', categoryController.post_category);
+router.post('/post-category', categoryController.post_category);
 
 
 /* admin */

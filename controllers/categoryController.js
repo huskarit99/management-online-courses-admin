@@ -1,4 +1,6 @@
 const Category = require('../models/category');
+var rootId = "";
+var childId = "";
 
 exports.list_root_categories = (req, res, next) => {
     let page = Number(req.query.page) || Number(1);
@@ -35,16 +37,17 @@ exports.list_root_categories = (req, res, next) => {
 }
 
 exports.edit_category = (req, res, next) => {
-    const rootId = req.query.rootid;
+    rootId = "";
+    childId = "";
+    rootId = req.query.rootid;
     if (req.query.childid) {
-        const childId = req.query.childid;
+        childId = req.query.childid;
         Category.findById(rootId)
             .lean()
             .exec((err, rootCategory) => {
                 if (err) {
                     next(err);
                 }
-                let childCategory;
                 for (let i = 0; i < rootCategory.categories.length; i++) {
                     if (rootCategory.categories[i]._id == childId) {
                         childCategory = rootCategory.categories[i];
@@ -68,8 +71,26 @@ exports.edit_category = (req, res, next) => {
     }
 }
 
-exports.post_category = (req, res, next) => {
-
+exports.post_category = async (req, res, next) => {
+    const newName = req.body.name;
+    await Category.findOne({ _id: rootId }, (err, rootCategory) => {
+        if (err) {
+            next(err);
+        }
+        if (childId) {
+            for (let i = 0; i < rootCategory.categories.length; i++) {
+                if (rootCategory.categories[i]._id == childId) {
+                    const tmp = rootCategory.categories[i];
+                    tmp.name = newName;
+                    rootCategory.categories[i] = tmp;
+                }
+            }
+        } else {
+            rootCategory.name = newName;
+        }
+        rootCategory.save((err, result) => { });
+        res.redirect('/list-root-categories');
+    });
 }
 
 

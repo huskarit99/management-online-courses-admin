@@ -79,7 +79,6 @@ exports.edit_student = (req, res, next) => {
     let email = req.body.email;
     let name = req.body.name;
     let username = req.body.username;
-    console.log(username)
     User.findOne({ username: username }, function (err, user) {
         if (user !== null) {
             user.name = name;
