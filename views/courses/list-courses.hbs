@@ -29,32 +29,33 @@
             </div>
         </div>
     </div>
+
     <div class="courses-area">
         <div class="container-fluid">
             <div class="row">
+                {{#each listCourses}}
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="courses-inner res-mg-b-30">
                         <div class="courses-title">
-                            <a href="detail-course"><img src="img/courses/1.jpg" alt=""></a>
-                            <h2>Tên khoá học</h2>
+                            <a href="detail-course"><img src="{{image}}" alt=""></a>
+                            <h2>{{name}}</h2>
                         </div>
                         <div class="courses-alaltic">
-                            <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-clock"></i></span> 1
-                                Year</span>
                             <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-heart"></i></span> 50</span>
                             <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-dollar"></i></span>
-                                500</span>
+                                {{price}} VND</span>
                         </div>
                         <div class="course-des">
                             <p><span><i class="fa fa-clock"></i></span> <b>Duration:</b> 6 Months</p>
-                            <p><span><i class="fa fa-clock"></i></span> <b>Giáo viên:</b> Nguyễn Thái Học</p>
-                            <p><span><i class="fa fa-clock"></i></span> <b>Học viên:</b> 100+</p>
+                            <p><span><i class="fa fa-clock"></i></span> <b>Giáo viên:</b>{{ownerId}}</p>
+                            <p><span><i class="fa fa-clock"></i></span> <b>Học viên:</b> {{subscribers.length}}</p>
                         </div>
                         <div class="product-buttons">
                             <button type="button" class="button-default cart-btn">Gỡ bỏ khoá học</button>
                         </div>
                     </div>
                 </div>
+                {{/each}}
             </div>
             <div class="custom-pagination" style="margin-bottom: 20px;">
                 <nav aria-label="Page navigation example">

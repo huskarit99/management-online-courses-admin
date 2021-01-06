@@ -3,6 +3,7 @@ var router = express.Router();
 var teacherController = require('../controllers/teacherController');
 var studentController = require('../controllers/studentController');
 var categoryController = require('../controllers/categoryController');
+var courseController = require('../controllers/courseController');
 const category = require('../models/category');
 
 /* GET home page. */
@@ -37,9 +38,7 @@ router.post('/list-students/edit-student/:id', studentController.edit_student);
 router.get('/list-students/:id', studentController.delete_student);
 
 /* course */
-router.get('/list-courses', function (req, res, next) {
-    res.render('courses/list-courses', { title: 'Express' });
-});
+router.get('/list-courses', courseController.list_courses);
 
 router.get('/detail-course', function (req, res, next) {
     res.render('courses/detail-course', { title: 'Express' });
