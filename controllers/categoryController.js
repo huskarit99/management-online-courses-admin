@@ -36,24 +36,36 @@ exports.list_root_categories = (req, res, next) => {
 
 exports.edit_category = (req, res, next) => {
     const rootId = req.query.rootid;
-    Category.findById(rootId)
-        .lean()
-        .exec((err, rootCategory) => {
-            if (err) {
-                next(err);
-            }
-            console.log(rootCategory.name);
-            res.render('categories/edit-category', {
-                name: rootCategory.name
+    if (req.query.childid) {
+        const childId = req.query.childid;
+        Category.findById(rootId)
+            .lean()
+            .exec((err, rootCategory) => {
+                if (err) {
+                    next(err);
+                }
+                let childCategory;
+                for (let i = 0; i < rootCategory.categories.length; i++) {
+                    if (rootCategory.categories[i]._id == childId) {
+                        childCategory = rootCategory.categories[i];
+                    }
+                }
+                res.render('categories/edit-category', {
+                    name: childCategory.name
+                });
             });
-        });
-
-    // if (req.query.childid) {
-    //     const childId = req.query.childid;
-
-    // } else {
-
-    // }
+    } else {
+        Category.findById(rootId)
+            .lean()
+            .exec((err, rootCategory) => {
+                if (err) {
+                    next(err);
+                }
+                res.render('categories/edit-category', {
+                    name: rootCategory.name
+                });
+            });
+    }
 }
 
 exports.post_category = (req, res, next) => {
