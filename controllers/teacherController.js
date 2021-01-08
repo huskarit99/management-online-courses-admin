@@ -65,19 +65,39 @@ exports.edit_teacher = (req, res, next) => {
     let email = req.body.email;
     let name = req.body.name;
     let username = req.body.username;
-    console.log(username)
     User.findOne({ username: username }, function(err, user) {
         if (user !== null) {
-            user.name = name;
-            User.findOne({ email: email }, function(err, user_email) {
-                if (user_email !== null) {
-                    res.redirect('/list-teachers?error=' + encodeURIComponent('Email already exist'));
+            if (user.name !== name) {
+                user.name = name;
+                if (user.email !== email) {
+                    User.findOne({ email: email }, function(err, user_email) {
+                        if (user_email !== null) {
+                            res.redirect('/list-teachers?error=' + encodeURIComponent('Email already exist'));
+                        } else {
+                            user.email = email;
+                            user.save(function(err, result) {});
+                            res.redirect('/list-teachers');
+                        }
+                    });
                 } else {
-                    user.email = email;
                     user.save(function(err, result) {});
                     res.redirect('/list-teachers');
                 }
-            })
+            } else {
+                if (user.email !== email) {
+                    User.findOne({ email: email }, function(err, user_email) {
+                        if (user_email !== null) {
+                            res.redirect('/list-teachers?error=' + encodeURIComponent('Email already exist'));
+                        } else {
+                            user.email = email;
+                            user.save(function(err, result) {});
+                            res.redirect('/list-teachers');
+                        }
+                    });
+                } else {
+                    res.redirect('/list-teachers');
+                }
+            }
         } else {
             res.redirect('/list-teachers?error=' + encodeURIComponent('User can not found'));
         }

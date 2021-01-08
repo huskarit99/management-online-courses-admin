@@ -68,16 +68,37 @@ exports.edit_student = (req, res, next) => {
     let username = req.body.username;
     User.findOne({ username: username }, function(err, user) {
         if (user !== null) {
-            user.name = name;
-            User.findOne({ email: email }, function(err, user_email) {
-                if (user_email !== null) {
-                    res.redirect('/list-students?error=' + encodeURIComponent('Email already exist'));
+            if (user.name !== name) {
+                user.name = name;
+                if (user.email !== email) {
+                    User.findOne({ email: email }, function(err, user_email) {
+                        if (user_email !== null) {
+                            res.redirect('/list-students?error=' + encodeURIComponent('Email already exist'));
+                        } else {
+                            user.email = email;
+                            user.save(function(err, result) {});
+                            res.redirect('/list-students');
+                        }
+                    });
                 } else {
-                    user.email = email;
                     user.save(function(err, result) {});
                     res.redirect('/list-students');
                 }
-            })
+            } else {
+                if (user.email !== email) {
+                    User.findOne({ email: email }, function(err, user_email) {
+                        if (user_email !== null) {
+                            res.redirect('/list-students?error=' + encodeURIComponent('Email already exist'));
+                        } else {
+                            user.email = email;
+                            user.save(function(err, result) {});
+                            res.redirect('/list-students');
+                        }
+                    });
+                } else {
+                    res.redirect('/list-students');
+                }
+            }
         } else {
             res.redirect('/list-students?error=' + encodeURIComponent('User can not found'));
         }
