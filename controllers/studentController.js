@@ -29,9 +29,6 @@ exports.student_list = (req, res, next) => {
 
         });
 };
-exports.add_student = (req, res, next) => {
-    res.render('students/add-student');
-};
 
 exports.post_student = (req, res, next) => {
     let email = req.body.email;
@@ -64,16 +61,6 @@ exports.post_student = (req, res, next) => {
         }
     });
 };
-exports.detail_student = (req, res, next) => {
-    const id = req.params.id;
-    User.findById(id).lean().exec(function(err, user) {
-        if (err) return next(err);
-        console.log(user);
-        res.render('students/edit-student', {
-            student: user
-        });
-    });
-}
 
 exports.edit_student = (req, res, next) => {
     let email = req.body.email;
@@ -82,11 +69,17 @@ exports.edit_student = (req, res, next) => {
     User.findOne({ username: username }, function(err, user) {
         if (user !== null) {
             user.name = name;
-            user.email = email;
-            user.save(function(err, result) {});
-            res.redirect('/list-students');
+            User.findOne({ email: email }, function(err, user_email) {
+                if (user_email !== null) {
+                    res.redirect('/list-students?error=' + encodeURIComponent('Email already exist'));
+                } else {
+                    user.email = email;
+                    user.save(function(err, result) {});
+                    res.redirect('/list-students');
+                }
+            })
         } else {
-            res.render('students/edit-student', { message: 'User can not found' });
+            res.redirect('/list-students?error=' + encodeURIComponent('User can not found'));
         }
     });
 }

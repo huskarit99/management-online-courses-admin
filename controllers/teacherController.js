@@ -29,10 +29,6 @@ exports.teacher_list = (req, res, next) => {
         });
 };
 
-exports.add_teacher = (req, res, next) => {
-    res.render('teachers/add-teacher');
-};
-
 exports.post_teacher = (req, res, next) => {
     let email = req.body.email;
     let name = req.body.name;
@@ -65,17 +61,6 @@ exports.post_teacher = (req, res, next) => {
     });
 };
 
-exports.detail_teacher = (req, res, next) => {
-    const id = req.params.id;
-    User.findById(id).lean().exec(function(err, user) {
-        if (err) return next(err);
-        console.log(user);
-        res.render('teachers/edit-teacher', {
-            teacher: user
-        });
-    });
-}
-
 exports.edit_teacher = (req, res, next) => {
     let email = req.body.email;
     let name = req.body.name;
@@ -84,11 +69,17 @@ exports.edit_teacher = (req, res, next) => {
     User.findOne({ username: username }, function(err, user) {
         if (user !== null) {
             user.name = name;
-            user.email = email;
-            user.save(function(err, result) {});
-            res.redirect('/list-teachers');
+            User.findOne({ email: email }, function(err, user_email) {
+                if (user_email !== null) {
+                    res.redirect('/list-teachers?error=' + encodeURIComponent('Email already exist'));
+                } else {
+                    user.email = email;
+                    user.save(function(err, result) {});
+                    res.redirect('/list-teachers');
+                }
+            })
         } else {
-            res.render('teachers/edit-teacher', { message: 'User can not found' });
+            res.redirect('/list-teachers?error=' + encodeURIComponent('User can not found'));
         }
     });
 }

@@ -14,11 +14,7 @@ router.get('/', function(req, res, next) {
 /* teacher */
 router.get('/list-teachers', teacherController.teacher_list);
 
-router.get('/add-teacher', teacherController.add_teacher);
-
 router.post('/list-teachers', teacherController.post_teacher);
-
-router.get('/list-teachers/edit-teacher/:id', teacherController.detail_teacher);
 
 router.post('/list-teachers/edit-teacher/:id', teacherController.edit_teacher);
 
@@ -27,11 +23,7 @@ router.get('/list-teachers/:id', teacherController.delete_teacher);
 /* student */
 router.get('/list-students', studentController.student_list);
 
-router.get('/add-student', studentController.add_student);
-
 router.post('/list-students', studentController.post_student);
-
-router.get('/list-students/edit-student/:id', studentController.detail_student);
 
 router.post('/list-students/edit-student/:id', studentController.edit_student);
 
