@@ -7,7 +7,7 @@ var courseController = require('../controllers/courseController');
 const category = require('../models/category');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
     res.render('users/index', { title: 'Express' });
 });
 
@@ -16,7 +16,7 @@ router.get('/list-teachers', teacherController.teacher_list);
 
 router.get('/add-teacher', teacherController.add_teacher);
 
-router.post('/add-teacher', teacherController.post_teacher);
+router.post('/list-teachers', teacherController.post_teacher);
 
 router.get('/list-teachers/edit-teacher/:id', teacherController.detail_teacher);
 
@@ -29,7 +29,7 @@ router.get('/list-students', studentController.student_list);
 
 router.get('/add-student', studentController.add_student);
 
-router.post('/add-student', studentController.post_student);
+router.post('/list-students', studentController.post_student);
 
 router.get('/list-students/edit-student/:id', studentController.detail_student);
 
@@ -40,14 +40,14 @@ router.get('/list-students/:id', studentController.delete_student);
 /* course */
 router.get('/list-courses', courseController.list_courses);
 
-router.get('/detail-course', function (req, res, next) {
+router.get('/detail-course', function(req, res, next) {
     res.render('courses/detail-course', { title: 'Express' });
 });
 
 /* category */
 router.get('/list-root-categories', categoryController.list_root_categories);
 
-router.get('/add-category', function (req, res, next) {
+router.get('/add-category', function(req, res, next) {
     res.render('categories/add-category', { title: 'Express' });
 });
 
@@ -56,11 +56,11 @@ router.post('/post-category', categoryController.post_category);
 
 
 /* admin */
-router.get('/user-info', function (req, res, next) {
+router.get('/user-info', function(req, res, next) {
     res.render('users/user-info', { title: 'Express' });
 });
 
-router.get('/login', function (req, res, next) {
+router.get('/login', function(req, res, next) {
     res.render('users/login', { title: 'Express' });
 });
 

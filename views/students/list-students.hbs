@@ -35,8 +35,62 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="product-status-wrap drp-lst">
                         <h4>Danh sách học viên</h4>
+                        <div id="addEmailAlert">
+                            <p style=" color: red">Email đã tồn tại</p>
+                        </div>
+                        <div id="addUserNameAlert">
+                            <p style=" color: red">Username đã tồn tại</p>
+                        </div>
+                        <script>
+                            $('#addEmailAlert').hide();
+                            $('#addUserNameAlert').hide();
+                            const urlParams = new URLSearchParams(window.location.search);
+                            const myParam = urlParams.get('error');
+                            if (myParam == "Email already exist") {
+                                $('#addEmailAlert').show();
+                            }else if(myParam == "Username already exist"){
+                                $('#addUserNameAlert').show();
+                            }
+                        </script>
                         <div class="add-product">
-                            <a href="add-student">Thêm học viên</a>
+                            <a data-toggle="modal" data-target="#exampleModal">Thêm học viên</a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Thêm học viên</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form id="acount-infor" action="/list-students" class="acount-infor"
+                                            method="post">
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="email"
+                                                        placeholder="Email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input name="name" type="text" class="form-control"
+                                                        placeholder="Họ và Tên" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input name="username" type="text" class="form-control"
+                                                        placeholder="Tên đăng nhập" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Thêm</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Đóng</button>
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="asset-inner">
                             <table>
