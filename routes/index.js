@@ -4,6 +4,7 @@ var teacherController = require('../controllers/teacherController');
 var studentController = require('../controllers/studentController');
 var categoryController = require('../controllers/categoryController');
 var courseController = require('../controllers/courseController');
+var userController = require('../controllers/userController');
 const category = require('../models/category');
 
 /* GET home page. */
@@ -52,9 +53,9 @@ router.get('/user-info', function(req, res, next) {
     res.render('users/user-info', { title: 'Express' });
 });
 
-router.get('/login', function(req, res, next) {
-    res.render('users/login', { title: 'Express' });
-});
+router.get('/login', userController.login);
+
+router.post('/login', userController.user_login);
 
 
 module.exports = router;
