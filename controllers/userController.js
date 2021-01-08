@@ -87,3 +87,37 @@ exports.edit_info = (req, res, next) => {
         }
     });
 }
+
+exports.change_password = (req, res, next) => {
+    let oldpassword = req.body.oldpassword;
+    let newpassword = req.body.newpassword;
+    let confirmpassword = req.body.confirmpassword;
+    User.findOne({ username: req.session.userSession.username }, function(err, user) {
+        if (err) { return done(err); }
+        if (user !== null) {
+            var hash = user.password;
+            if (bcrypt.compareSync(oldpassword, hash)) {
+                if (oldpassword != newpassword) {
+                    if (newpassword == confirmpassword) {
+                        user.password = bcrypt.hashSync(newpassword, bcrypt.genSaltSync(10));
+                        user.save(function(err, result) {});
+                        res.redirect('/user-info');
+                    } else {
+                        res.redirect('/user-info?error=' + encodeURIComponent('Wrong new password'));
+                    }
+                } else {
+                    res.redirect('/user-info?error=' + encodeURIComponent('Password not change'));
+                }
+
+            } else {
+                res.redirect('/user-info?error=' + encodeURIComponent('Wrong old password'));
+            }
+        } else {
+            res.redirect('/user-info?error=' + encodeURIComponent('User can not found'));
+        }
+    });
+}
+exports.logout = (req, res, next) => {
+    req.session.destroy();
+    res.redirect('/login');
+}

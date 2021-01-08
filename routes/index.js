@@ -53,6 +53,10 @@ router.get('/user-info', userController.user_info);
 
 router.post('/user-info/edit-info', userController.edit_info);
 
+router.post('/user-info/change-password', userController.change_password);
+
+router.get('/logout', userController.logout);
+
 router.get('/login', userController.login);
 
 router.post('/login', userController.user_login);
