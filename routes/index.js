@@ -49,9 +49,9 @@ router.post('/post-category', categoryController.post_category);
 
 
 /* admin */
-router.get('/user-info', function(req, res, next) {
-    res.render('users/user-info', { title: 'Express' });
-});
+router.get('/user-info', userController.user_info);
+
+router.post('/user-info/edit-info', userController.edit_info);
 
 router.get('/login', userController.login);
 

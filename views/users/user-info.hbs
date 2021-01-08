@@ -38,6 +38,7 @@
                         <ul id="myTabedu1" class="tab-review-design">
                             <li class="active"><a href="#description">Chỉnh sửa thông tin cá nhân</a></li>
                             <li><a href="#changepassword">Đổi mật khẩu</a></li>
+
                         </ul>
                         <div id="myTabContent" class="tab-content custom-product-edit">
                             <div class="product-tab-list tab-pane fade active in" id="description">
@@ -46,22 +47,28 @@
                                         <div class="review-content-section">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <div class="devit-card-custom">
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Email"
-                                                                value="minhquoc5599@gmail.com">
+                                                    <form id="acount-infor" action="/user-info/edit-info" class="acount-infor"
+                                                        method="post">
+                                                        <div class="devit-card-custom">
+                                                            <div class="form-group">
+                                                                <input name="email" type="text" class="form-control"
+                                                                    placeholder="Email"
+                                                                    value="{{session.userSession.email}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input name="name" type="text" class="form-control"
+                                                                    placeholder="Họ và tên"
+                                                                    value="{{session.userSession.name}}">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input name="username" type="text" class="form-control"
+                                                                    placeholder="Tên tài khoản"
+                                                                    value="{{session.userSession.username}}" readonly>
+                                                            </div>
+                                                            <button type="submit"
+                                                                class="btn btn-primary waves-effect waves-light">Thay đổi</button>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <input name="name" type="text" class="form-control"
-                                                                placeholder="Họ và tên" value="Nguyễn Minh Quốc">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input name="username" type="text" class="form-control"
-                                                                placeholder="Tên tài khoản" value="minhquoc5599">
-                                                        </div>
-                                                        <button type="submit"
-                                                            class="btn btn-primary waves-effect waves-light">Submit</button>
-                                                    </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,6 +103,23 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="emailAlert" style="margin-top: 10px;">
+                                <p style=" color: red">Email đã tồn tại</p>
+                            </div>
+                            <div id="editUserAlert" style="margin-top: 10px;">
+                                <p style=" color: red">Người dùng không tồn tại</p>
+                            </div>
+                            <script>
+                                $('#emailAlert').hide();
+                                $('#editUserAlert').hide();
+                                const urlParams = new URLSearchParams(window.location.search);
+                                const myParam = urlParams.get('error');
+                                if (myParam == "Email already exist") {
+                                    $('#emailAlert').show();
+                                } else if (myParam == "User can not found") {
+                                    $('#editUserAlert').show();
+                                }
+                            </script>
                         </div>
                     </div>
                 </div>

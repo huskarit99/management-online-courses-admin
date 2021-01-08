@@ -38,3 +38,52 @@ exports.user_login = passport.authenticate('local', {
     function(req, res) {
         res.redirect('/');
     }
+exports.user_info = (req, res, next) => {
+    res.render('users/user-info');
+}
+
+exports.edit_info = (req, res, next) => {
+    let email = req.body.email;
+    let name = req.body.name;
+    let username = req.body.username;
+    User.findOne({ username: username }, function(err, user) {
+        if (user !== null) {
+            if (user.name !== name) {
+                user.name = name;
+                if (user.email !== email) {
+                    User.findOne({ email: email }, function(err, user_email) {
+                        if (user_email !== null) {
+                            res.redirect('/user-info?error=' + encodeURIComponent('Email already exist'));
+                        } else {
+                            user.email = email;
+                            req.session.userSession = user;
+                            user.save(function(err, result) {});
+                            res.redirect('/user-info');
+                        }
+                    });
+                } else {
+                    req.session.userSession = user;
+                    user.save(function(err, result) {});
+                    res.redirect('/user-info');
+                }
+            } else {
+                if (user.email !== email) {
+                    User.findOne({ email: email }, function(err, user_email) {
+                        if (user_email !== null) {
+                            res.redirect('/user-info?error=' + encodeURIComponent('Email already exist'));
+                        } else {
+                            user.email = email;
+                            req.session.userSession = user;
+                            user.save(function(err, result) {});
+                            res.redirect('/user-info');
+                        }
+                    });
+                } else {
+                    res.redirect('/user-info');
+                }
+            }
+        } else {
+            res.redirect('/user-info?error=' + encodeURIComponent('User can not found'));
+        }
+    });
+}
