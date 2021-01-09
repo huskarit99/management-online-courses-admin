@@ -22,6 +22,7 @@ var CourseSchema = new Schema(
             url: { type: String, require: true, max: 150 },
             isPreviewed: { type: Boolean, default: false }
         }],
+        status: { type: Number, require: true }
     },
     {
         timestamps: true
