@@ -33,7 +33,7 @@
     <div class="courses-area">
         <div class="container-fluid">
             <div class="row">
-                {{#each listCourses}}
+                {{#each listCoursesInOnePage}}
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                     <div class="courses-inner res-mg-b-30">
                         <div class="courses-title">
@@ -60,11 +60,11 @@
             <div class="custom-pagination" style="margin-bottom: 20px;">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="list-courses?page={{this}}">Previous</a></li>
+                        {{#each  page_number}}
+                        <li class="page-item"><a class="page-link" href="list-courses?page={{this}}">{{this}}</a></li>
+                        {{/each}}
+                        <li class="page-item"><a class="page-link" href="list-courses?page={{this}}">Next</a></li>
                     </ul>
                 </nav>
             </div>
