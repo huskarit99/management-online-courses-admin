@@ -126,7 +126,8 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa học viên
+                                                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa học
+                                                            viên
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
@@ -192,12 +193,18 @@
                         <div class="custom-pagination">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                    <li class="page-item" style="{{isDisplayedPrevious currentPage 1}}">
+                                        <a href="list-students?page={{predictPage currentPage -1}}"
+                                            class=" page-link">Previous</a></li>
                                     {{#each page_number}}
-                                    <li class="page-item"><a class="page-link"
-                                            href="/list-teachers?page={{this}}">{{this}}</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" style="{{isCurrentPage ../currentPage this}}"
+                                            href="/list-students?page={{this}}">{{this}}</a></li>
                                     {{/each}}
-                                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                    <li class="page-item" style="{{isDisplayedNext currentPage page_number.length}}">
+                                        <a class="page-link"
+                                            href="list-students?page={{predictPage currentPage -1}}">Next</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>

@@ -64,7 +64,9 @@
                                 href="list-courses?page={{predictPage currentPage -1}}">Previous</a>
                         </li>
                         {{#each  page_number}}
-                        <li class="page-item"><a class="page-link" href="list-courses?page={{this}}">{{this}}</a></li>
+                        <li class="page-item">
+                            <a class="page-link" style="{{isCurrentPage ../currentPage this}}"
+                                href="list-courses?page={{this}}">{{this}}</a></li>
                         {{/each}}
                         <li style="{{isDisplayedNext currentPage page_number.length}}" class="page-item"><a
                                 class="page-link" href="list-courses?page={{predictPage currentPage 1}}">Next</a></li>
@@ -85,5 +87,4 @@
             </div>
         </div>
     </div>
-</div>
 </div>
