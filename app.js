@@ -37,6 +37,10 @@ app.engine('hbs', hbs({
         isDisplayedPrevious: (currentPage, minPage) => {
             if (currentPage === minPage)
                 return "display: none";
+        },
+        isCurrentPage: (currentPage, page) => {
+            if (currentPage === page)
+                return "background-color: #337ab7; color: #fff";
         }
     }
 }))
