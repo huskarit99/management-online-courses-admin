@@ -22,6 +22,7 @@ exports.list_courses = (req, res, next) => {
                 }
             }
             res.render('courses/list-courses', {
+                currentPage: page,
                 page_number: page_number,
                 listCoursesInOnePage: listCoursesInOnePage
             });

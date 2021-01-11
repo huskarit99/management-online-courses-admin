@@ -19,13 +19,26 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connect error!'));
 db.once('open', function (callback) {
     console.log("connection succeeded");
-})
+});
 
 // view engine setup
 app.engine('hbs', hbs({
     extname: 'hbs',
     defaultLayout: 'layout',
-    layoutDir: __dirname + '/views/layouts/'
+    layoutDir: __dirname + '/views/layouts/',
+    helpers: {
+        predictPage: (currentPage, step) => {
+            return currentPage + step;
+        },
+        isDisplayedNext: (currentPage, maxPage) => {
+            if (currentPage === maxPage)
+                return "display: none";
+        },
+        isDisplayedPrevious: (currentPage, minPage) => {
+            if (currentPage === minPage)
+                return "display: none";
+        }
+    }
 }))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
