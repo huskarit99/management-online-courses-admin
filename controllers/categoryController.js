@@ -3,7 +3,7 @@ var rootId = "";
 var childId = "";
 
 exports.list_root_categories = (req, res, next) => {
-    let page = Number(req.query.page) || Number(1);
+    const page = Number(req.query.page) || Number(1);
 
     Category.find()
         .lean()
@@ -30,6 +30,7 @@ exports.list_root_categories = (req, res, next) => {
                 }
             }
             res.render('categories/list-root-categories', {
+                currentPage: page,
                 page_number: page_number,
                 listCategoriesInOnePage: listCategoriesInOnePage
             });
