@@ -110,7 +110,6 @@ exports.delete_student = (req, res, next) => {
     User.findOne({ _id: id }, function (err, user) {
         if (err) return next(err);
         user.status = 0;
-        console.log(user);
         user.save(function (err, result) { });
         res.redirect('/list-students');
     })

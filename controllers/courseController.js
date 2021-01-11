@@ -1,7 +1,7 @@
 const Course = require('../models/course');
 
 exports.list_courses = (req, res, next) => {
-    var page = Number(req.query.page) || Number(1);
+    const page = Number(req.query.page) || Number(1);
 
     Course.find()
         .lean()
@@ -10,8 +10,9 @@ exports.list_courses = (req, res, next) => {
                 next(err);
             }
 
-            var listCoursesInOnePage = [], page_number = [];
-            for (let i = 0; i < listCourses.length; i++) {
+            var listCoursesInOnePage = [], page_number = [], i = 0;
+            for (let _i = 0; _i < listCourses.length; _i++) {
+                if (listCourses[_i].status == 0) continue;
                 if (Math.floor(i / 8) == page - 1) {
                     const data = listCourses[i];
                     data['page'] = i + 1;
@@ -20,6 +21,7 @@ exports.list_courses = (req, res, next) => {
                 if (i / 8 == Math.floor(i / 8)) {
                     page_number.push((i / 8) + 1);
                 }
+                i++;
             }
             res.render('courses/list-courses', {
                 currentPage: page,
@@ -27,4 +29,14 @@ exports.list_courses = (req, res, next) => {
                 listCoursesInOnePage: listCoursesInOnePage
             });
         });
+}
+
+exports.delete_course = (req, res, next) => {
+    const id = req.query.id;
+    Course.findOne({ _id: id }, async (err, course) => {
+        if (err) return next(err);
+        course.status = 0;
+        await course.save((err, result) => { });
+        res.redirect('/list-courses');
+    });
 }

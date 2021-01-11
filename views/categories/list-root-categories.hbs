@@ -49,6 +49,32 @@
                             </thead>
                             <tbody>
                                 {{#each listCategoriesInOnePage}}
+                                <!-- Delete a Child Category -->
+                                <div class="modal fade" id="delChildCategoryModal{{_id}}" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Thông
+                                                    báo</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Bạn có chắc muốn lĩnh vực "{{this.name}}" này không?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="/list-root-categories/{{_id}}">
+                                                    <button type="button" class="btn btn-primary">Xoá</button>
+                                                </a>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Đóng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <tr>
                                     <td>{{page}} </td>
                                     <td>{{name}} </td>
@@ -64,7 +90,8 @@
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </button>
                                         </a>
-                                        <button data-toggle="tooltip" title="Trash" class="pd-setting-ed">
+                                        <button data-toggle="modal" data-target="#delChildCategoryModal{{_id}}"
+                                            title="Trash" class="pd-setting-ed">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </button>
                                     </td>

@@ -50,8 +50,35 @@
                             <p><span><i class="fa fa-clock"></i></span> <b>Giáo viên:</b>{{ownerId}}</p>
                             <p><span><i class="fa fa-clock"></i></span> <b>Học viên:</b> {{subscribers.length}}</p>
                         </div>
+                        <!-- Delete course -->
+                        <div class="modal fade" id="delCourse{{_id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Thông
+                                            báo</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Bạn có chắc muốn xóa khóa học "{{this.name}}" này không?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="/delete-course?id={{_id}}">
+                                            <button type="button" class="btn btn-primary">Xoá</button>
+                                        </a>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Đóng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="product-buttons">
-                            <button type="button" class="button-default cart-btn">Gỡ bỏ khoá học</button>
+                            <button type="button" class="button-default cart-btn" data-toggle="modal"
+                                data-target="#delCourse{{_id}}" title="Trash" class="pd-setting-ed">
+                                Gỡ bỏ khoá học</button>
                         </div>
                     </div>
                 </div>
