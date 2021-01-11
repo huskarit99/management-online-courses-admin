@@ -2,7 +2,7 @@ const User = require('../models/user');
 var bcrypt = require('bcrypt');
 
 exports.student_list = (req, res, next) => {
-    let page = Number(req.query.page) || Number(1);
+    const page = Number(req.query.page) || Number(1);
     User.find({ role: 2, status: 1 }).lean().skip(4 * page - 4).limit(4)
         .exec(function (err, list_students) {
             if (err) { return next(err) };
