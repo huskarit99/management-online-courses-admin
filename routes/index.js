@@ -8,9 +8,7 @@ var userController = require('../controllers/userController');
 const category = require('../models/category');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('users/index', { title: 'Express' });
-});
+router.get('/', userController.index);
 
 /* teacher */
 router.get('/list-teachers', teacherController.teacher_list);
@@ -35,7 +33,7 @@ router.get('/list-courses', courseController.list_courses);
 
 router.get('/delete-course', courseController.delete_course);
 
-router.get('/detail-course', function (req, res, next) {
+router.get('/detail-course', function(req, res, next) {
     res.render('courses/detail-course', { title: 'Express' });
 });
 
@@ -44,7 +42,7 @@ router.get('/list-root-categories', categoryController.list_root_categories);
 
 router.get('/delete-category', categoryController.delete_category);
 
-router.get('/add-category', function (req, res, next) {
+router.get('/add-category', function(req, res, next) {
     res.render('categories/add-category', { title: 'Express' });
 });
 

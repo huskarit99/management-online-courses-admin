@@ -4,8 +4,20 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 // show login view
 
+exports.index = (req, res, next) => {
+    if (req.session.userSession) {
+        res.render('users/index')
+    } else {
+        res.render('users/login');
+    }
+}
 exports.login = (req, res, next) => {
-    res.render('users/login');
+    if (req.session.userSession) {
+        res.render('users/index')
+    } else {
+        res.render('users/login');
+    }
+
 }
 
 passport.use(new LocalStrategy({
