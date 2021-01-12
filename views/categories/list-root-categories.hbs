@@ -34,7 +34,18 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="product-status-wrap drp-lst">
-                        <h4>Danh sách lĩnh vực cấp 1</h4>
+                        <h4>Danh sách lĩnh vực</h4>
+                        <div id="deleteAlert">
+                            <p style=" color: red">This category still exists somewhere. You can not delete it !!!</p>
+                        </div>
+                        <p id="messageError" style="display: none;">{{messageError}}</p>
+                        <script>
+                            $('#deleteAlert').hide();
+                            if ($('#messageError').html() == "DelCategory") {
+                                console.log("hahaha");
+                                $('#deleteAlert').show();
+                            }
+                        </script>
                         <div class="add-product">
                             <a href="add-category">Thêm lĩnh vực</a>
                         </div>
@@ -49,8 +60,8 @@
                             </thead>
                             <tbody>
                                 {{#each listCategoriesInOnePage}}
-                                <!-- Delete a Child Category -->
-                                <div class="modal fade" id="delChildCategoryModal{{_id}}" tabindex="-1" role="dialog"
+                                <!-- Delete a root Category -->
+                                <div class="modal fade" id="delRootCategoryModal{{_id}}" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -66,7 +77,7 @@
                                                 <p>Bạn có chắc muốn lĩnh vực "{{this.name}}" này không?</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <a href="/list-root-categories/{{_id}}">
+                                                <a href="/delete-category?rootid={{_id}}">
                                                     <button type="button" class="btn btn-primary">Xoá</button>
                                                 </a>
                                                 <button type="button" class="btn btn-secondary"
@@ -75,7 +86,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /Delete a Child Category -->
+                                <!-- /Delete a root Category -->
                                 <tr>
                                     <td>{{page}} </td>
                                     <td>{{name}} </td>
@@ -91,7 +102,7 @@
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </button>
                                         </a>
-                                        <button data-toggle="modal" data-target="#delChildCategoryModal{{_id}}"
+                                        <button data-toggle="modal" data-target="#delRootCategoryModal{{_id}}"
                                             title="Trash" class="pd-setting-ed">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </button>
@@ -114,12 +125,44 @@
                                                             <tr>
                                                                 <th>No</th>
                                                                 <th>Tên lĩnh vực</th>
-                                                                <th>
-                                                                    Cài đặt</th>
+                                                                <th>Cài đặt</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             {{#each categories}}
+                                                            <!-- Delete a child Category -->
+                                                            <div class="modal fade" id="delChildCategoryModal{{_id}}"
+                                                                tabindex="-1" role="dialog"
+                                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title"
+                                                                                id="exampleModalLabel">Thông
+                                                                                báo</h5>
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <p>Bạn có chắc muốn lĩnh vực "{{this.name}}"
+                                                                                này không?</p>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <a
+                                                                                href="/delete-category?rootid={{../_id}}&childid={{_id}}">
+                                                                                <button type="button"
+                                                                                    class="btn btn-primary">Xoá</button>
+                                                                            </a>
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-dismiss="modal">Đóng</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /Delete a Child Category -->
                                                             <tr>
                                                                 <td>{{page}}</td>
                                                                 <td>{{name}} </td>
@@ -132,7 +175,8 @@
                                                                                 aria-hidden="true"></i>
                                                                         </button>
                                                                     </a>
-                                                                    <button data-toggle="tooltip" title="Trash"
+                                                                    <button title="Trash" data-toggle="modal"
+                                                                        data-target="#delChildCategoryModal{{_id}}"
                                                                         class="pd-setting-ed">
                                                                         <i class="fa fa-trash-o" aria-hidden="true"></i>
                                                                     </button>

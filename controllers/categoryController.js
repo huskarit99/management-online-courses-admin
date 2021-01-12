@@ -1,11 +1,29 @@
 const Category = require('../models/category');
+const Course = require('../models/course');
 var rootId = "";
 var childId = "";
+var messageError = "";
+
+function processChildCategory(childCategories) {
+    var newChildCategories = [];
+    if (childCategories) {
+        let i = 0;
+        for (let _i = 0; _i < childCategories.length; _i++) {
+            if (childCategories[_i].status === 0) continue;
+            var tmp = childCategories[_i];
+            tmp['page'] = i + 1;
+            i++;
+            newChildCategories.push(tmp);
+        }
+    }
+    return newChildCategories;
+}
 
 exports.list_root_categories = (req, res, next) => {
     const page = Number(req.query.page) || Number(1);
-
-    Category.find()
+    const tmpError = messageError;
+    messageError = "";
+    Category.find({ status: 1 })
         .lean()
         .exec((err, listRootCategories) => {
             if (err) {
@@ -14,15 +32,9 @@ exports.list_root_categories = (req, res, next) => {
             var listCategoriesInOnePage = [], page_number = [];
             for (let i = 0; i < listRootCategories.length; i++) {
                 if (Math.floor(i / 4) == page - 1) {
-                    const data = listRootCategories[i];
+                    var data = listRootCategories[i];
                     data['page'] = i + 1;
-                    if (data.categories) {
-                        for (let j = 0; j < data.categories.length; j++) {
-                            var tmp = data.categories[j];
-                            tmp['page'] = j + 1;
-                            data.categories[j] = tmp;
-                        }
-                    }
+                    data.categories = processChildCategory(data.categories);
                     listCategoriesInOnePage.push(data);
                 }
                 if (i / 4 == Math.floor(i / 4)) {
@@ -30,6 +42,7 @@ exports.list_root_categories = (req, res, next) => {
                 }
             }
             res.render('categories/list-root-categories', {
+                messageError: tmpError,
                 currentPage: page,
                 page_number: page_number,
                 listCategoriesInOnePage: listCategoriesInOnePage
@@ -73,59 +86,57 @@ exports.edit_category = (req, res, next) => {
 }
 
 async function doesChildCategoryBelongToAnyCourse(categoryChildName) {
-    const Course = require('../models/course');
-    var check = false;
-    await Course.find({ categoryChildName: categoryChildName }, (er, course) => {
+    var isError = false;
+    await Course.find({ categoryChildName: categoryChildName }, (err, course) => {
         if (err) next(err);
-        check = true;
+        isError = true;
     });
-    return check;
+    return isError;
 }
 
 exports.delete_category = (req, res, next) => {
+    messageError = "";
     rootId = "";
     childId = "";
     rootId = req.query.rootid;
     if (req.query.childid) {
         childId = req.query.childid;
     }
-    var check = false;
-    Category.findById(rootId)
-        .lean()
-        .exec(async (err, rootCategory) => {
-            if (err) {
-                next(err);
+    var isError = false;
+    Category.findById(rootId, async (err, rootCategory) => {
+        if (err) {
+            next(err);
+        }
+        if (childId === "") {
+            for (let i = 0; i < rootCategory.categories.length; i++) {
+                if (await (doesChildCategoryBelongToAnyCourse(rootCategory.categories[i].categoryChildName)) === true) {
+                    isError = true;
+                }
             }
-            if (childId === "") {
-                for (let i = 0; i < rootCategory.categories.length; i++) {
-                    if (await (doesChildCategoryBelongToAnyCourse(rootCategory.categories[i].categoryChildName)) === false) {
-                        check = true;
-                    }
-                }
-                if (check === false) {
-                    rootCategory.status = 0;
-                } else {
-
-                }
+            if (isError === false) {
+                rootCategory.status = 0;
             } else {
-                let i;
-                for (i = 0; i < rootCategory.categories.length; i++) {
-                    if (rootCategory.categories[i]._id === childId) {
-                        check = await (doesChildCategoryBelongToAnyCourse(rootCategory.categories[i].categoryChildName));
-                        break;
-                    }
-                }
-                if (check === true) {
-                    rootCategory.categories[i].status = 0;
-                } else {
-
+                messageError = "DelCategory";
+            }
+        } else {
+            var i;
+            for (i = 0; i < rootCategory.categories.length; i++) {
+                if (rootCategory.categories[i]._id == childId) {
+                    isError = await (doesChildCategoryBelongToAnyCourse(rootCategory.categories[i].categoryChildName));
+                    break;
                 }
             }
-            await rootCategory.save((err, result) => { });
-            res.render('categories/list_root_categories', {
-                name: childCategory.name
-            });
-        });
+            if (isError === false) {
+                var tmp = rootCategory.categories[i];
+                tmp.status = 0;
+                rootCategory.categories[i] = tmp;
+            } else {
+                messageError = "DelCategory";
+            }
+        }
+        rootCategory.save((err, result) => { });
+        res.redirect('/list-root-categories');
+    });
 }
 
 exports.post_category = (req, res, next) => {

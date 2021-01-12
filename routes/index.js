@@ -42,6 +42,8 @@ router.get('/detail-course', function (req, res, next) {
 /* category */
 router.get('/list-root-categories', categoryController.list_root_categories);
 
+router.get('/delete-category', categoryController.delete_category);
+
 router.get('/add-category', function (req, res, next) {
     res.render('categories/add-category', { title: 'Express' });
 });
