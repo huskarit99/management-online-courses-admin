@@ -46,9 +46,9 @@
                                 {{price}} VND</span>
                         </div>
                         <div class="course-des">
-                            <p><span><i class="fa fa-clock"></i></span> <b>Duration:</b> 6 Months</p>
-                            <p><span><i class="fa fa-clock"></i></span> <b>Giáo viên:</b>{{ownerId}}</p>
-                            <p><span><i class="fa fa-clock"></i></span> <b>Học viên:</b> {{subscribers.length}}</p>
+                            <p><span><i class="fa fa-clock"></i></span> <b>Duration: </b> 6 Months</p>
+                            <p><span><i class="fa fa-clock"></i></span> <b>Giáo viên: </b>{{nameOwner}}</p>
+                            <p><span><i class="fa fa-clock"></i></span> <b>Học viên: </b> {{subscribers.length}}</p>
                         </div>
                         <!-- Delete course -->
                         <div class="modal fade" id="delCourse{{_id}}" tabindex="-1" role="dialog"
@@ -75,6 +75,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- /Delete course -->
                         <div class="product-buttons">
                             <button type="button" class="button-default cart-btn" data-toggle="modal"
                                 data-target="#delCourse{{_id}}" title="Trash" class="pd-setting-ed">

@@ -72,9 +72,65 @@ exports.edit_category = (req, res, next) => {
     }
 }
 
-exports.post_category = async (req, res, next) => {
+async function doesChildCategoryBelongToAnyCourse(categoryChildName) {
+    const Course = require('../models/course');
+    var check = false;
+    await Course.find({ categoryChildName: categoryChildName }, (er, course) => {
+        if (err) next(err);
+        check = true;
+    });
+    return check;
+}
+
+exports.delete_category = (req, res, next) => {
+    rootId = "";
+    childId = "";
+    rootId = req.query.rootid;
+    if (req.query.childid) {
+        childId = req.query.childid;
+    }
+    var check = false;
+    Category.findById(rootId)
+        .lean()
+        .exec(async (err, rootCategory) => {
+            if (err) {
+                next(err);
+            }
+            if (childId === "") {
+                for (let i = 0; i < rootCategory.categories.length; i++) {
+                    if (await (doesChildCategoryBelongToAnyCourse(rootCategory.categories[i].categoryChildName)) === false) {
+                        check = true;
+                    }
+                }
+                if (check === false) {
+                    rootCategory.status = 0;
+                } else {
+
+                }
+            } else {
+                let i;
+                for (i = 0; i < rootCategory.categories.length; i++) {
+                    if (rootCategory.categories[i]._id === childId) {
+                        check = await (doesChildCategoryBelongToAnyCourse(rootCategory.categories[i].categoryChildName));
+                        break;
+                    }
+                }
+                if (check === true) {
+                    rootCategory.categories[i].status = 0;
+                } else {
+
+                }
+            }
+            await rootCategory.save((err, result) => { });
+            res.render('categories/list_root_categories', {
+                name: childCategory.name
+            });
+        });
+}
+
+exports.post_category = (req, res, next) => {
     const newName = req.body.name;
-    await Category.findOne({ _id: rootId }, (err, rootCategory) => {
+    Category.findOne({ _id: rootId }, (err, rootCategory) => {
         if (err) {
             next(err);
         }
