@@ -38,12 +38,19 @@
                         <div id="deleteAlert">
                             <p style=" color: red">This category still exists somewhere. You can not delete it !!!</p>
                         </div>
+                        <div id="existAlert">
+                            <p style=" color: red">This category is not available !!!</p>
+                        </div>
                         <p id="messageError" style="display: none;">{{messageError}}</p>
                         <script>
                             $('#deleteAlert').hide();
+                            $('#existAlert').hide();
                             if ($('#messageError').html() == "DelCategory") {
-                                console.log("hahaha");
                                 $('#deleteAlert').show();
+                            } else {
+                                if ($('#messageError').html() == "NameOfCategoryIsExist") {
+                                    $('#existAlert').show();
+                                }
                             }
                         </script>
                         <div class="add-product">

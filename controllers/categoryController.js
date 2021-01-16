@@ -98,9 +98,11 @@ exports.edit_category = (req, res, next) => {
 
 async function doesChildCategoryBelongToAnyCourse(categoryChildName) {
     var isError = false;
-    await Course.find({ categoryChildName: categoryChildName }, (err, course) => {
+    await Course.findOne({ categoryChildName: categoryChildName }, (err, course) => {
         if (err) next(err);
-        isError = true;
+        if (course) {
+            isError = true;
+        }
     });
     return isError;
 }
@@ -183,22 +185,32 @@ exports.add_one_child_category = (req, res, next) => {
     const rootid = req.query.rootid;
     const name = req.body.name;
     const status = 1;
+    messageError = "";
     Category.findById(rootid, (err, rootCategory) => {
         if (err) return next(err);
-        console.log(rootCategory);
-        if (!rootCategory.categories.includes(name)) {
+        var isExist = false;
+        for (let i = 0; i < rootCategory.categories.length; i++) {
+            const category = rootCategory.categories[i];
+            if (category.name == name) {
+                isExist = true;
+                break;
+            }
+        }
+        if (!isExist) {
             rootCategory.categories.push({ name, status });
             rootCategory.save((err, result) => { });
-            res.redirect('/list-root-categories');
         } else {
-
+            messageError = "NameOfCategoryIsExist";
         }
+        res.redirect('/list-root-categories');
+
     });
 }
 
 exports.add_one_root_category = (req, res, next) => {
     const name = req.body.name;
     const status = 1;
+    messageError = "";
     Category.findOne({ name: name }, (err, rootCategory) => {
         if (err) return next(err);
         if (!rootCategory) {
@@ -207,10 +219,10 @@ exports.add_one_root_category = (req, res, next) => {
                 status: status
             });
             rootCategory.save((err, result) => { });
-            res.redirect('/list-root-categories');
         } else {
-
+            messageError = "NameOfCategoryIsExist";
         }
+        res.redirect('/list-root-categories');
     });
 }
 
