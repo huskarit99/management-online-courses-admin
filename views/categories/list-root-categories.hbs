@@ -97,6 +97,7 @@
                                         </a>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
+                                        {{#if ../status}}
                                         <a href="edit-category?rootid={{_id}}">
                                             <button data-toggle="tooltip" title="Edit" class="pd-setting-ed">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -106,6 +107,12 @@
                                             title="Trash" class="pd-setting-ed">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </button>
+                                        {{else}}
+                                        <button data-toggle="modal" data-target="#delRootCategoryModal{{_id}}"
+                                            title="Trash" class="pd-setting-ed">
+                                            <i class="fa fa-lock" aria-hidden="true" style="color:red"></i>
+                                        </button>
+                                        {{/if}}
                                     </td>
                                 </tr>
                                 <tr>

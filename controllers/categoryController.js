@@ -1,5 +1,5 @@
 const Category = require('../models/category');
-const Course = require('../models/course');
+var Course = require('../models/course');
 var rootId = "";
 var childId = "";
 var messageError = "";
@@ -115,7 +115,7 @@ exports.delete_category = (req, res, next) => {
             childId = req.query.childid;
         }
         var isError = false;
-        Category.findById(rootId, async(err, rootCategory) => {
+        Category.findById(rootId, async (err, rootCategory) => {
             if (err) {
                 next(err);
             }
@@ -146,7 +146,7 @@ exports.delete_category = (req, res, next) => {
                     messageError = "DelCategory";
                 }
             }
-            rootCategory.save((err, result) => {});
+            rootCategory.save((err, result) => { });
             res.redirect('/list-root-categories');
         });
     } else {
@@ -157,22 +157,38 @@ exports.delete_category = (req, res, next) => {
 
 exports.post_category = (req, res, next) => {
     const newName = req.body.name;
-    Category.findOne({ _id: rootId }, (err, rootCategory) => {
-        if (err) {
-            next(err);
-        }
+    var oldName;
+    Category.findOne({ _id: rootId }, async (err, rootCategory) => {
+        if (err) return next(err);
         if (childId) {
             for (let i = 0; i < rootCategory.categories.length; i++) {
                 if (rootCategory.categories[i]._id == childId) {
                     const tmp = rootCategory.categories[i];
+                    oldName = tmp.name;
                     tmp.name = newName;
                     rootCategory.categories[i] = tmp;
                 }
             }
         } else {
+            oldName = rootCategory.name;
             rootCategory.name = newName;
         }
-        rootCategory.save((err, result) => {});
+        await rootCategory.save((err, result) => { });
+        // var isUpdateOver = false;
+        // while (!isUpdateOver) {
+        //     isUpdateOver = true;
+        //     console.log(1);
+        //     await Course.findOne({ categoryChildName: oldName }, await (err, course) => {
+        //         if (err) console.log(err);
+        //         if (!course) return;
+        //         isUpdateOver = false;
+        //         course.categoryChildName = newName;
+        //         console.log(2);
+        //         course.save();
+        //     });
+        //     console.log(3);
+        // }
+        await Course.updateMany({ categoryChildName: oldName, categoryRootId: rootId }, { $set: { categoryChildName: newName } });
         res.redirect('/list-root-categories');
     });
 }

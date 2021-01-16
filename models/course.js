@@ -11,7 +11,7 @@ var CourseSchema = new Schema(
         discount: { type: Number, require: true },
         ownerId: { type: String, require: true, max: 50 },
         categoryRootId: { type: Schema.Types.ObjectId, ref: 'Category' },
-        categoryChildCId: { type: String, require: true, max: 50 },
+        categoryChildName: { type: String, require: true, max: 50 },
         subscribers: [{
             userId: { type: Schema.Types.ObjectId, ref: 'User' },
             point: { type: Number, default: 0 },
