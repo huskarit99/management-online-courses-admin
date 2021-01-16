@@ -44,6 +44,12 @@
                             <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-heart"></i></span> 50</span>
                             <span class="cr-ic-r"><span class="course-icon"><i class="fa fa-dollar"></i></span>
                                 {{price}} VND</span>
+                            {{#unless status}}
+                            <button style="float:right" data-toggle="modal" data-target="#delRootCategoryModal{{_id}}"
+                                title="Trash" class="pd-setting-ed">
+                                <i class="fa fa-lock" aria-hidden="true" style="color:red"></i>
+                            </button>
+                            {{/unless}}
                         </div>
                         <div class="course-des">
                             <p><span><i class="fa fa-clock"></i></span> <b>Duration: </b> 6 Months</p>
@@ -52,7 +58,7 @@
                             <p><span><i class="fa fa-clock"></i></span> <b>Học viên: </b> {{subscribers.length}}</p>
                         </div>
                         <!-- Delete course -->
-                        <div class="modal fade" id="delCourse{{_id}}" tabindex="-1" role="dialog"
+                        <div class="modal fade" id="lockCourse{{_id}}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -64,10 +70,10 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Bạn có chắc muốn xóa khóa học "{{this.name}}" này không?</p>
+                                        <p>Bạn có chắc muốn khoá khóa học "{{this.name}}" này không?</p>
                                     </div>
                                     <div class="modal-footer">
-                                        <a href="/delete-course?id={{_id}}">
+                                        <a href="/lock-course?id={{_id}}">
                                             <button type="button" class="btn btn-primary">Xoá</button>
                                         </a>
                                         <button type="button" class="btn btn-secondary"
@@ -77,11 +83,47 @@
                             </div>
                         </div>
                         <!-- /Delete course -->
+                        <!-- Delete course -->
+                        <div class="modal fade" id="unLockCourse{{_id}}" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Thông
+                                            báo</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Bạn có chắc muốn mở khóa khóa học "{{this.name}}" này không?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="/unlock-course?id={{_id}}">
+                                            <button style="background-color: red" type="button"
+                                                class="btn btn-primary">Mở</button>
+                                        </a>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Đóng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Delete course -->
+                        {{#if status}}
                         <div class="product-buttons">
                             <button type="button" class="button-default cart-btn" data-toggle="modal"
-                                data-target="#delCourse{{_id}}" title="Trash" class="pd-setting-ed">
+                                data-target="#lockCourse{{_id}}" title="Trash" class="pd-setting-ed">
                                 Gỡ bỏ khoá học</button>
                         </div>
+                        {{else}}
+                        <div class="product-buttons">
+                            <button style="background-color:red" type="button" class="button-default cart-btn"
+                                data-toggle="modal" data-target="#unLockCourse{{_id}}" title="Trash"
+                                class="pd-setting-ed">
+                                Mở khóa khoá học</button>
+                        </div>
+                        {{/if}}
                     </div>
                 </div>
                 {{/each}}

@@ -11,7 +11,7 @@ exports.list_courses = (req, res, next) => {
                     next(err);
                 }
                 var listCoursesInOnePage = [],
-                    page_number = [],
+                    page_number = [];
                 for (let i = 0; i < listCourses.length; i++) {
                     if (Math.floor(i / 8) == page - 1) {
                         const data = listCourses[i];
@@ -25,7 +25,6 @@ exports.list_courses = (req, res, next) => {
                     if (i / 8 == Math.floor(i / 8)) {
                         page_number.push((i / 8) + 1);
                     }
-                    i++;
                 }
                 res.render('courses/list-courses', {
                     currentPage: page,
@@ -39,11 +38,21 @@ exports.list_courses = (req, res, next) => {
 
 }
 
-exports.delete_course = (req, res, next) => {
+exports.lock_course = (req, res, next) => {
     const id = req.query.id;
     Course.findOne({ _id: id }, async (err, course) => {
         if (err) return next(err);
         course.status = 0;
+        await course.save((err, result) => { });
+        res.redirect('/list-courses');
+    });
+}
+
+exports.unlock_course = (req, res, next) => {
+    const id = req.query.id;
+    Course.findOne({ _id: id }, async (err, course) => {
+        if (err) return next(err);
+        course.status = 1;
         await course.save((err, result) => { });
         res.redirect('/list-courses');
     });

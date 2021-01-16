@@ -31,18 +31,16 @@ router.get('/list-students/:id', studentController.delete_student);
 /* course */
 router.get('/list-courses', courseController.list_courses);
 
-router.get('/delete-course', courseController.delete_course);
+router.get('/lock-course', courseController.lock_course);
 
-router.get('/detail-course', function(req, res, next) {
-    res.render('courses/detail-course', { title: 'Express' });
-});
+router.get('/unlock-course', courseController.unlock_course);
 
 /* category */
 router.get('/list-root-categories', categoryController.list_root_categories);
 
 router.get('/delete-category', categoryController.delete_category);
 
-router.get('/add-category', function(req, res, next) {
+router.get('/add-category', function (req, res, next) {
     res.render('categories/add-category', { title: 'Express' });
 });
 
