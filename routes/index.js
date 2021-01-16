@@ -17,7 +17,9 @@ router.post('/list-teachers', teacherController.post_teacher);
 
 router.post('/list-teachers/edit-teacher/:id', teacherController.edit_teacher);
 
-router.get('/list-teachers/:id', teacherController.delete_teacher);
+router.get('/list-teachers/lock-teacher/:id', teacherController.lock_teacher);
+
+router.get('/list-teachers/unlock-teacher/:id', teacherController.unlock_teacher);
 
 /* student */
 router.get('/list-students', studentController.student_list);
