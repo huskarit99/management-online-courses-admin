@@ -174,23 +174,22 @@ exports.post_category = (req, res, next) => {
             rootCategory.name = newName;
         }
         await rootCategory.save((err, result) => { });
-        // var isUpdateOver = false;
-        // while (!isUpdateOver) {
-        //     isUpdateOver = true;
-        //     console.log(1);
-        //     await Course.findOne({ categoryChildName: oldName }, await (err, course) => {
-        //         if (err) console.log(err);
-        //         if (!course) return;
-        //         isUpdateOver = false;
-        //         course.categoryChildName = newName;
-        //         console.log(2);
-        //         course.save();
-        //     });
-        //     console.log(3);
-        // }
         await Course.updateMany({ categoryChildName: oldName, categoryRootId: rootId }, { $set: { categoryChildName: newName } });
         res.redirect('/list-root-categories');
     });
+}
+
+exports.add_one_child_category = (req, res, next) => {
+    const rootid = req.query.rootid;
+    const name = req.body.name;
+    Category.findById(rootid, (err, rootCategory) => {
+        if (err) return next(err);
+        rootCategory.categories.add();
+    });
+}
+
+exports.add_one_root_category = (req, res, next) => {
+
 }
 
 

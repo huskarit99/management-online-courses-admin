@@ -47,8 +47,43 @@
                             }
                         </script>
                         <div class="add-product">
-                            <a href="add-category">Thêm lĩnh vực</a>
+                            <a data-toggle="modal" data-target="#addRootCategory">Thêm lĩnh vực</a>
                         </div>
+                        <!-- add a root Category -->
+                        <div class="modal fade" id="addRootCategory" tabindex=" -1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="padding: 4%;">
+                                        <div style="display: table-cell; vertical-align: middle; float:left">
+                                            <h5 class="modal-title" id="exampleModalLabel">Thêm
+                                                lĩnh vực
+                                            </h5>
+                                        </div>
+                                        <div style="display: table-cell; vertical-align: middle; float:right">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <form id="acount-infor" action="/add-one-root-category" class="acount-infor"
+                                        method="post">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <input name="name" type="text" class="form-control"
+                                                    placeholder="Tên lĩnh vực" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Thêm</button>
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Đóng</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- add a root Category -->
                         <table class="table">
                             <thead>
                                 <tr>
@@ -130,7 +165,7 @@
                                                                 <div>
                                                                     <div style="text-align:right">
                                                                         <a data-toggle="modal"
-                                                                            data-target="#addChildCategory">
+                                                                            data-target="#addChildCategory{{_id}}">
                                                                             <button style="background-color:#006DF0"
                                                                                 data-toggle="tooltip" title="Edit"
                                                                                 class="pd-setting-ed">
@@ -140,8 +175,8 @@
                                                                             </button>
                                                                         </a>
                                                                     </div>
-                                                                    <!-- Modal -->
-                                                                    <div class="modal fade" id="addChildCategory"
+                                                                    <!-- add a Child Category -->
+                                                                    <div class="modal fade" id="addChildCategory{{_id}}"
                                                                         tabindex=" -1" role="dialog"
                                                                         aria-labelledby="exampleModalLabel"
                                                                         aria-hidden="true">
@@ -153,11 +188,9 @@
                                                                                         style="display: table-cell; vertical-align: middle; float:left">
                                                                                         <h5 class="modal-title"
                                                                                             id="exampleModalLabel">Thêm
-                                                                                            học
-                                                                                            viên
+                                                                                            lĩnh vực con của "{{name}}"
                                                                                         </h5>
                                                                                     </div>
-
                                                                                     <div
                                                                                         style="display: table-cell; vertical-align: middle; float:right">
                                                                                         <button type="button"
@@ -170,27 +203,14 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <form id="acount-infor"
-                                                                                    action="/list-students"
+                                                                                    action="/add-one-child-category?rootid={{_id}}"
                                                                                     class="acount-infor" method="post">
                                                                                     <div class="modal-body">
-                                                                                        <div class="form-group">
-                                                                                            <input type="text"
-                                                                                                class="form-control"
-                                                                                                name="email"
-                                                                                                placeholder="Email">
-                                                                                        </div>
                                                                                         <div class="form-group">
                                                                                             <input name="name"
                                                                                                 type="text"
                                                                                                 class="form-control"
-                                                                                                placeholder="Họ và Tên"
-                                                                                                required>
-                                                                                        </div>
-                                                                                        <div class="form-group">
-                                                                                            <input name="username"
-                                                                                                type="text"
-                                                                                                class="form-control"
-                                                                                                placeholder="Tên đăng nhập"
+                                                                                                placeholder="Tên lĩnh vực"
                                                                                                 required>
                                                                                         </div>
                                                                                     </div>
@@ -205,6 +225,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+                                                                    <!-- add a Child Category -->
                                                                 </div>
                                                             </th>
                                                         </tr>

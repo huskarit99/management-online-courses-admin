@@ -49,8 +49,12 @@ router.get('/add-category', function (req, res, next) {
 });
 
 router.get('/edit-category', categoryController.edit_category);
+
 router.post('/post-category', categoryController.post_category);
 
+router.post('/add-one-child-category', categoryController.add_one_child_category);
+
+router.post('/add-one-root-category', categoryController.add_one_root_category);
 
 /* admin */
 router.get('/user-info', userController.user_info);
