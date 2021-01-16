@@ -24,7 +24,7 @@ exports.list_root_categories = (req, res, next) => {
         const page = Number(req.query.page) || Number(1);
         const tmpError = messageError;
         messageError = "";
-        Category.find({ status: 1 })
+        Category.find()
             .lean()
             .exec((err, listRootCategories) => {
                 if (err) {
