@@ -6,15 +6,13 @@ exports.list_courses = (req, res, next) => {
         const page = Number(req.query.page) || Number(1);
         Course.find()
             .lean()
-            .exec(async(err, listCourses) => {
+            .exec(async (err, listCourses) => {
                 if (err) {
                     next(err);
                 }
                 var listCoursesInOnePage = [],
                     page_number = [],
-                    i = 0;
-                for (let _i = 0; _i < listCourses.length; _i++) {
-                    if (listCourses[_i].status == 0) continue;
+                for (let i = 0; i < listCourses.length; i++) {
                     if (Math.floor(i / 8) == page - 1) {
                         const data = listCourses[i];
                         data['page'] = i + 1;
@@ -43,10 +41,10 @@ exports.list_courses = (req, res, next) => {
 
 exports.delete_course = (req, res, next) => {
     const id = req.query.id;
-    Course.findOne({ _id: id }, async(err, course) => {
+    Course.findOne({ _id: id }, async (err, course) => {
         if (err) return next(err);
         course.status = 0;
-        await course.save((err, result) => {});
+        await course.save((err, result) => { });
         res.redirect('/list-courses');
     });
 }
