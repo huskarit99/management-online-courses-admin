@@ -105,7 +105,7 @@
                                     <th>Họ và tên</th>
                                     <th>Tên đăng nhập</th>
                                     <th>Email</th>
-                                    <th>Cài đặt</th>
+                                    <th style="text-align: center; vertical-align: middle;">Cài đặt</th>
                                 </tr>
                                 {{#each student_list}}
                                 <tr>
@@ -113,14 +113,21 @@
                                     <td>{{name}}</td>
                                     <td>{{username}}</td>
                                     <td>{{email}}</td>
-                                    <td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        {{#if status}}
                                         <button data-toggle="modal" data-target="#editModal{{_id}}" title="Edit"
                                             class="pd-setting-ed"><i class="fa fa-pencil-square-o"
                                                 aria-hidden="true"></i></button>
-                                        <button data-toggle="modal" data-target="#exampleModal{{_id}}" title="Trash"
+                                        <button data-toggle="modal" data-target="#lockModal{{_id}}" title="Trash"
                                             class="pd-setting-ed"><i class="fa fa-trash-o"
                                                 aria-hidden="true"></i></button>
-                                        <!-- Modal -->
+                                        {{else}}
+                                        <button data-toggle="modal" data-target="#unlockModal{{_id}}" title="Trash"
+                                            class="pd-setting-ed">
+                                            <i class="fa fa-lock" aria-hidden="true" style="color:red"></i>
+                                        </button>
+                                        {{/if}}
+                                        <!-- edit Modal -->
                                         <div class="modal fade" id="editModal{{_id}}" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -161,30 +168,60 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal{{_id}}" tabindex="-1" role="dialog"
+                                        <!-- edit Modal -->
+                                        <!-- lock Modal -->
+                                        <div class="modal fade" id="lockModal{{_id}}" tabindex="-1" role="dialog"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
+                                                    <div class="modal-header" style="text-align:left">
                                                         <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        <p>Bạn có chắc muốn xoá học viên {{this.name}} này không?</p>
+                                                    <div class="modal-body" style="text-align:left">
+                                                        <p>Bạn có chắc muốn khóa học viên "{{this.name}}" này không?</p>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <a href="/list-students/{{_id}}"><button type="button"
-                                                                class="btn btn-primary">Xoá</button></a>
+                                                        <a href="/list-students/lock-student/{{_id}}"><button
+                                                                type="button" class="btn btn-primary">Xoá</button></a>
                                                         <button type="button" class="btn btn-secondary"
                                                             data-dismiss="modal">Đóng</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- lock Modal -->
+                                        <!-- unlock Modal -->
+                                        <div class="modal fade" id="unlockModal{{_id}}" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"
+                                                            style="text-align:left">Thông báo</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body" style="text-align:left">
+                                                        <p>Bạn có chắc muốn mở khóa học viên "{{this.name}}" này không?
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <a href="/list-students/unlock-student{{_id}}"><button
+                                                                style="background-color: red" type="button"
+                                                                class="btn btn-primary">Mở</button></a>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">Đóng</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- unlock Modal -->
                                     </td>
                                 </tr>
                                 {{/each}}
