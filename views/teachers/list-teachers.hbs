@@ -65,11 +65,20 @@
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Thêm giáo viên</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
+                                        <div class="modal-header" style="padding: 4%;">
+                                            <div style="display: table-cell; vertical-align: middle; float:left">
+                                                <h5 class="modal-title" id="exampleModalLabel">Thêm
+                                                    giáo
+                                                    viên
+                                                </h5>
+                                            </div>
+
+                                            <div style="display: table-cell; vertical-align: middle; float:right">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
                                         </div>
                                         <form id="acount-infor" action="/list-teachers" class="acount-infor"
                                             method="post">
@@ -133,7 +142,8 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa giáo
+                                                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa
+                                                            giáo
                                                             viên
                                                         </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
@@ -175,14 +185,16 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header" style="text-align: left">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Thông báo
+                                                        </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body" style="text-align: left">
-                                                        <p>Bạn có chắc muốn xoá giáo viên {{this.name}} này không?</p>
+                                                        <p>Bạn có chắc muốn xoá giáo viên {{this.name}} này không?
+                                                        </p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <a href="/list-teachers/lock-teacher/{{_id}}"><button
@@ -200,14 +212,16 @@
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header" style="text-align: left">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Thông báo
+                                                        </h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
                                                     <div class="modal-body" style="text-align: left">
-                                                        <p>Bạn có chắc muốn xoá giáo viên {{this.name}} này không?</p>
+                                                        <p>Bạn có chắc muốn xoá giáo viên {{this.name}} này không?
+                                                        </p>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <a href="/list-teachers/unlock-teacher/{{_id}}"><button
@@ -239,7 +253,8 @@
                                     {{/each}}
                                     <li class="page-item" style="{{isDisplayedNext currentPage page_number.length}}">
                                         <a class="page-link"
-                                            href="list-root-categories?page={{predictPage currentPage 1}}">Next</a></li>
+                                            href="list-root-categories?page={{predictPage currentPage 1}}">Next</a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
