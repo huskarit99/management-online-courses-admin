@@ -182,9 +182,15 @@ exports.post_category = (req, res, next) => {
 exports.add_one_child_category = (req, res, next) => {
     const rootid = req.query.rootid;
     const name = req.body.name;
+    const status = 1;
     Category.findById(rootid, (err, rootCategory) => {
         if (err) return next(err);
-        rootCategory.categories.add();
+        console.log(rootCategory);
+        if (!rootCategory.categories.includes(name)) {
+            rootCategory.categories.push({ name, status });
+        }
+        rootCategory.save((err, result) => { });
+        res.redirect('/list-root-categories');
     });
 }
 
