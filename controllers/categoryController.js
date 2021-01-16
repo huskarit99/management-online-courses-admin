@@ -188,14 +188,30 @@ exports.add_one_child_category = (req, res, next) => {
         console.log(rootCategory);
         if (!rootCategory.categories.includes(name)) {
             rootCategory.categories.push({ name, status });
+            rootCategory.save((err, result) => { });
+            res.redirect('/list-root-categories');
+        } else {
+
         }
-        rootCategory.save((err, result) => { });
-        res.redirect('/list-root-categories');
     });
 }
 
 exports.add_one_root_category = (req, res, next) => {
+    const name = req.body.name;
+    const status = 1;
+    Category.findOne({ name: name }, (err, rootCategory) => {
+        if (err) return next(err);
+        if (!rootCategory) {
+            rootCategory = new Category({
+                name: name,
+                status: status
+            });
+            rootCategory.save((err, result) => { });
+            res.redirect('/list-root-categories');
+        } else {
 
+        }
+    });
 }
 
 
