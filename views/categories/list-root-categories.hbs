@@ -97,7 +97,7 @@
                                         </a>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
-                                        <a href="edit-category?rootid={{_id}}">
+                                        <a style="color:black" href="edit-category?rootid={{_id}}">
                                             <button data-toggle="tooltip" title="Edit" class="pd-setting-ed">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </button>
@@ -107,6 +107,7 @@
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </button>
                                     </td>
+                                    <td />
                                 </tr>
                                 <tr>
                                     <td style="padding: 0px 20%" colspan="4" class="padding-fix text-center">
@@ -117,75 +118,156 @@
                                                 name="ctl00$ContentPlaceHolderContent$ListViewOrders$ctrl0$HiddenFieldOrderId"
                                                 id="ContentPlaceHolderContent_ListViewOrders_HiddenFieldOrderId_0"
                                                 value="2">
-
                                             <div class="items">
-                                                <div>
-                                                    <table class="table table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>No</th>
-                                                                <th>Tên lĩnh vực</th>
-                                                                <th>Cài đặt</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {{#each categories}}
-                                                            <!-- Delete a child Category -->
-                                                            <div class="modal fade" id="delChildCategoryModal{{_id}}"
-                                                                tabindex="-1" role="dialog"
-                                                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title"
-                                                                                id="exampleModalLabel">Thông
-                                                                                báo</h5>
-                                                                            <button type="button" class="close"
-                                                                                data-dismiss="modal" aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Tên lĩnh vực</th>
+                                                            <th style="text-align: center; vertical-align: middle;">Cài
+                                                                đặt</th>
+                                                            <th>
+                                                                <div>
+                                                                    <div style="text-align:right">
+                                                                        <a data-toggle="modal"
+                                                                            data-target="#addChildCategory">
+                                                                            <button style="background-color:#006DF0"
+                                                                                data-toggle="tooltip" title="Edit"
+                                                                                class="pd-setting-ed">
+                                                                                <i style="color:white"
+                                                                                    class="fa fa-plus"
+                                                                                    aria-hidden="true"></i>
                                                                             </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <p>Bạn có chắc muốn lĩnh vực "{{this.name}}"
-                                                                                này không?</p>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <a
-                                                                                href="/delete-category?rootid={{../_id}}&childid={{_id}}">
-                                                                                <button type="button"
-                                                                                    class="btn btn-primary">Xoá</button>
-                                                                            </a>
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-dismiss="modal">Đóng</button>
+                                                                        </a>
+                                                                    </div>
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="addChildCategory"
+                                                                        tabindex=" -1" role="dialog"
+                                                                        aria-labelledby="exampleModalLabel"
+                                                                        aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header"
+                                                                                    style="padding: 4%;">
+                                                                                    <div
+                                                                                        style="display: table-cell; vertical-align: middle; float:left">
+                                                                                        <h5 style="vertical-align: middle"
+                                                                                            class="modal-title"
+                                                                                            id="exampleModalLabel">Thêm
+                                                                                            học
+                                                                                            viên
+                                                                                        </h5>
+                                                                                    </div>
+
+                                                                                    <div
+                                                                                        style="display: table-cell; vertical-align: middle; float:right">
+                                                                                        <button type="button"
+                                                                                            class="close"
+                                                                                            data-dismiss="modal"
+                                                                                            aria-label="Close">
+                                                                                            <span
+                                                                                                aria-hidden="true">&times;</span>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <form id="acount-infor"
+                                                                                    action="/list-students"
+                                                                                    class="acount-infor" method="post">
+                                                                                    <div class="modal-body">
+                                                                                        <div class="form-group">
+                                                                                            <input type="text"
+                                                                                                class="form-control"
+                                                                                                name="email"
+                                                                                                placeholder="Email">
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <input name="name"
+                                                                                                type="text"
+                                                                                                class="form-control"
+                                                                                                placeholder="Họ và Tên"
+                                                                                                required>
+                                                                                        </div>
+                                                                                        <div class="form-group">
+                                                                                            <input name="username"
+                                                                                                type="text"
+                                                                                                class="form-control"
+                                                                                                placeholder="Tên đăng nhập"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="submit"
+                                                                                            class="btn btn-primary">Thêm</button>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-secondary"
+                                                                                            data-dismiss="modal">Đóng</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <!-- /Delete a Child Category -->
-                                                            <tr>
-                                                                <td>{{page}}</td>
-                                                                <td>{{name}} </td>
-                                                                <td>
-                                                                    <a
-                                                                        href="edit-category?rootid={{../_id}}&childid={{_id}}">
-                                                                        <button data-toggle="tooltip" title="Edit"
-                                                                            class="pd-setting-ed">
-                                                                            <i class="fa fa-pencil-square-o"
-                                                                                aria-hidden="true"></i>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {{#each categories}}
+                                                        <!-- Delete a child Category -->
+                                                        <div class="modal fade" id="delChildCategoryModal{{_id}}"
+                                                            tabindex="-1" role="dialog"
+                                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel"
+                                                                            style="text-align: left;">
+                                                                            Thông
+                                                                            báo</h5>
+                                                                        <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
                                                                         </button>
-                                                                    </a>
-                                                                    <button title="Trash" data-toggle="modal"
-                                                                        data-target="#delChildCategoryModal{{_id}}"
+                                                                    </div>
+                                                                    <div class="modal-body" style="text-align: left;">
+                                                                        <p>Bạn có chắc muốn xóa lĩnh vực "{{this.name}}"
+                                                                            này không?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <a
+                                                                            href="/delete-category?rootid={{../_id}}&childid={{_id}}">
+                                                                            <button type="button"
+                                                                                class="btn btn-primary">Xoá</button>
+                                                                        </a>
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Đóng</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /Delete a Child Category -->
+                                                        <tr>
+                                                            <td>{{page}}</td>
+                                                            <td>{{name}} </td>
+                                                            <td style="text-align: center; vertical-align: middle;">
+                                                                <a
+                                                                    href="edit-category?rootid={{../_id}}&childid={{_id}}">
+                                                                    <button data-toggle="tooltip" title="Edit"
                                                                         class="pd-setting-ed">
-                                                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                        <i style="color:black"
+                                                                            class="fa fa-pencil-square-o"
+                                                                            aria-hidden="true"></i>
                                                                     </button>
-                                                                </td>
-                                                            </tr>
-                                                            {{/each}}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                                </a>
+                                                                <button title="Trash" data-toggle="modal"
+                                                                    data-target="#delChildCategoryModal{{_id}}"
+                                                                    class="pd-setting-ed">
+                                                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        {{/each}}
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </td>
