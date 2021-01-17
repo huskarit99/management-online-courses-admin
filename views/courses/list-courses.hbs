@@ -24,7 +24,7 @@
                                                     style="position: absolute; width: 220px; left:100px; top:0px">
                                                     {{#each categories}}
                                                     <li style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;"><a
+                                             border-radius: 5px;background-color: #fff;"><a style="color:#000;"
                                                             href="/list-courses?filterByCategory={{_id}}">{{name}}</a>
                                                     </li>
                                                     {{/each}}
@@ -36,7 +36,7 @@
                                                     style="position: absolute; width: 220px; left:100px; top:0px">
                                                     {{#each users}}
                                                     <li style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;"><a
+                                             border-radius: 5px;background-color: #fff;"><a style="color:#000;"
                                                             href="/list-courses?filterByUser={{_id}}">{{name}}</a>
                                                     </li>
                                                     {{/each}}
@@ -195,15 +195,18 @@
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li style="{{isDisplayedPrevious currentPage 1}}" class="page-item"><a class="page-link"
-                                href="list-courses?page={{predictPage currentPage -1}}">Previous</a>
+                                href="list-courses?{{predictPage currentPage -1 filterByCategory filterByUser}}">Previous</a>
                         </li>
                         {{#each  page_number}}
                         <li class="page-item">
                             <a class="page-link" style="{{isCurrentPage ../currentPage this}}"
-                                href="list-courses?page={{this}}">{{this}}</a></li>
+                                href="list-courses?{{choosePage this ../filterByCategory ../filterByUser}}">{{this}}</a>
+                        </li>
                         {{/each}}
                         <li style="{{isDisplayedNext currentPage page_number.length}}" class="page-item"><a
-                                class="page-link" href="list-courses?page={{predictPage currentPage 1}}">Next</a></li>
+                                class="page-link"
+                                href="list-courses?{{predictPage currentPage 1 filterByCategory filterByUser}}">Next</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

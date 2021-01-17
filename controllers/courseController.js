@@ -18,10 +18,11 @@ exports.list_courses = async (req, res, next) => {
                 categories = listCategory;
             }
         });
-        if (req.query.filterByCategory || req.query.filterByUser) {
-            if (req.query.filterByCategory) {
-                const id = req.query.filterByCategory;
-                await Course.find({ categoryRootId: id })
+        const filterByCategory = req.query.filterByCategory;
+        const filterByUser = req.query.filterByUser;
+        if (filterByCategory || filterByUser) {
+            if (filterByCategory) {
+                await Course.find({ categoryRootId: filterByCategory })
                     .lean()
                     .exec(async (err, listCourses) => {
                         if (err) {
@@ -44,6 +45,8 @@ exports.list_courses = async (req, res, next) => {
                             }
                         }
                         res.render('courses/list-courses', {
+                            filterByCategory: filterByCategory,
+                            filterByUser: filterByUser,
                             users: users,
                             categories: categories,
                             currentPage: page,
@@ -52,9 +55,8 @@ exports.list_courses = async (req, res, next) => {
                         });
                     });
             } else {
-                if (req.query.filterByUser) {
-                    const id = req.query.filterByUser;
-                    await Course.find({ ownerId: id })
+                if (filterByUser) {
+                    await Course.find({ ownerId: filterByUser })
                         .lean()
                         .exec(async (err, listCourses) => {
                             if (err) {
@@ -77,6 +79,8 @@ exports.list_courses = async (req, res, next) => {
                                 }
                             }
                             res.render('courses/list-courses', {
+                                filterByCategory: filterByCategory,
+                                filterByUser: filterByUser,
                                 users: users,
                                 categories: categories,
                                 currentPage: page,
@@ -110,6 +114,8 @@ exports.list_courses = async (req, res, next) => {
                         }
                     }
                     res.render('courses/list-courses', {
+                        filterByCategory: filterByCategory,
+                        filterByUser: filterByUser,
                         users: users,
                         categories: categories,
                         currentPage: page,

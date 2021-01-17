@@ -27,8 +27,25 @@ app.engine('hbs', hbs({
     defaultLayout: 'layout',
     layoutDir: __dirname + '/views/layouts/',
     helpers: {
-        predictPage: (currentPage, step) => {
-            return currentPage + step;
+        predictPage: (currentPage, step, filterByCategory, filterByUser) => {
+            if (filterByCategory) {
+                return "page=" + (currentPage + step).toString() + "&filterByCategory=" + (filterByCategory).toString();
+            } else {
+                if (filterByUser) {
+                    return "page=" + (currentPage + step).toString() + "&filterByUser=" + (filterByUser).toString();
+                }
+            }
+            return "page=" + (currentPage + step).toString();
+        },
+        choosePage: (page, filterByCategory, filterByUser) => {
+            if (filterByCategory) {
+                return "page=" + (page).toString() + "&filterByCategory=" + (filterByCategory).toString();
+            } else {
+                if (filterByUser) {
+                    return "page=" + (page).toString() + "&filterByUser=" + (filterByUser).toString();
+                }
+            }
+            return "page=" + (page).toString();
         },
         isDisplayedNext: (currentPage, maxPage) => {
             if (currentPage === maxPage)
