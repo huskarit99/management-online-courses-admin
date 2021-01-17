@@ -41,6 +41,12 @@ app.engine('hbs', hbs({
         isCurrentPage: (currentPage, page) => {
             if (currentPage === page)
                 return "background-color: #337ab7; color: #fff";
+        },
+        eq: function () {
+            const args = Array.prototype.slice.call(arguments, 0, -1);
+            return args.every(function (expression) {
+                return args[0] === expression;
+            });
         }
     }
 }))
