@@ -1,37 +1,123 @@
 const Course = require('../models/course');
 const User = require('../models/user');
+const Category = require('../models/category');
 
-exports.list_courses = (req, res, next) => {
+exports.list_courses = async (req, res, next) => {
     if (req.session.userSession) {
         const page = Number(req.query.page) || Number(1);
-        Course.find()
-            .lean()
-            .exec(async (err, listCourses) => {
-                if (err) {
-                    next(err);
-                }
-                var listCoursesInOnePage = [],
-                    page_number = [];
-                for (let i = 0; i < listCourses.length; i++) {
-                    if (Math.floor(i / 8) == page - 1) {
-                        const data = listCourses[i];
-                        data['page'] = i + 1;
-                        await User.findOne({ _id: data.ownerId }, (err, user) => {
-                            if (err) return next(err);
-                            data['nameOwner'] = user['name'];
+        var users = [];
+        var categories = [];
+        await User.find({ status: 1, role: 1 }).lean().exec((err, listUser) => {
+            if (err) return next(err);
+            if (listUser)
+                users = listUser;
+        });
+        await Category.find({ status: 1 }).lean().exec((err, listCategory) => {
+            if (err) return next(err);
+            if (listCategory) {
+                categories = listCategory;
+            }
+        });
+        if (req.query.filterByCategory || req.query.filterByUser) {
+            if (req.query.filterByCategory) {
+                const id = req.query.filterByCategory;
+                await Course.find({ categoryRootId: id })
+                    .lean()
+                    .exec(async (err, listCourses) => {
+                        if (err) {
+                            return next(err);
+                        }
+                        var listCoursesInOnePage = [],
+                            page_number = [];
+                        for (let i = 0; i < listCourses.length; i++) {
+                            if (Math.floor(i / 8) == page - 1) {
+                                const data = listCourses[i];
+                                data['page'] = i + 1;
+                                await User.findOne({ _id: data.ownerId }, (err, user) => {
+                                    if (err) return next(err);
+                                    data['nameOwner'] = user['name'];
+                                });
+                                listCoursesInOnePage.push(data);
+                            }
+                            if (i / 8 == Math.floor(i / 8)) {
+                                page_number.push((i / 8) + 1);
+                            }
+                        }
+                        res.render('courses/list-courses', {
+                            users: users,
+                            categories: categories,
+                            currentPage: page,
+                            page_number: page_number,
+                            listCoursesInOnePage: listCoursesInOnePage
                         });
-                        listCoursesInOnePage.push(data);
-                    }
-                    if (i / 8 == Math.floor(i / 8)) {
-                        page_number.push((i / 8) + 1);
-                    }
+                    });
+            } else {
+                if (req.query.filterByUser) {
+                    const id = req.query.filterByUser;
+                    await Course.find({ ownerId: id })
+                        .lean()
+                        .exec(async (err, listCourses) => {
+                            if (err) {
+                                return next(err);
+                            }
+                            var listCoursesInOnePage = [],
+                                page_number = [];
+                            for (let i = 0; i < listCourses.length; i++) {
+                                if (Math.floor(i / 8) == page - 1) {
+                                    const data = listCourses[i];
+                                    data['page'] = i + 1;
+                                    await User.findOne({ _id: data.ownerId }, (err, user) => {
+                                        if (err) return next(err);
+                                        data['nameOwner'] = user['name'];
+                                    });
+                                    listCoursesInOnePage.push(data);
+                                }
+                                if (i / 8 == Math.floor(i / 8)) {
+                                    page_number.push((i / 8) + 1);
+                                }
+                            }
+                            res.render('courses/list-courses', {
+                                users: users,
+                                categories: categories,
+                                currentPage: page,
+                                page_number: page_number,
+                                listCoursesInOnePage: listCoursesInOnePage
+                            });
+                        });
                 }
-                res.render('courses/list-courses', {
-                    currentPage: page,
-                    page_number: page_number,
-                    listCoursesInOnePage: listCoursesInOnePage
+            }
+        } else {
+            await Course.find()
+                .lean()
+                .exec(async (err, listCourses) => {
+                    if (err) {
+                        next(err);
+                    }
+                    var listCoursesInOnePage = [],
+                        page_number = [];
+                    for (let i = 0; i < listCourses.length; i++) {
+                        if (Math.floor(i / 8) == page - 1) {
+                            const data = listCourses[i];
+                            data['page'] = i + 1;
+                            await User.findOne({ _id: data.ownerId }, (err, user) => {
+                                if (err) return next(err);
+                                data['nameOwner'] = user['name'];
+                            });
+                            listCoursesInOnePage.push(data);
+                        }
+                        if (i / 8 == Math.floor(i / 8)) {
+                            page_number.push((i / 8) + 1);
+                        }
+                    }
+                    res.render('courses/list-courses', {
+                        users: users,
+                        categories: categories,
+                        currentPage: page,
+                        page_number: page_number,
+                        listCoursesInOnePage: listCoursesInOnePage
+                    });
                 });
-            });
+        }
     } else {
         res.redirect('/login');
     }

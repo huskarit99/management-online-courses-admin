@@ -22,36 +22,24 @@
                                              border-radius: 5px;background-color: #fff;">Categories
                                                 <ul id="dropdownChildSubCategories"
                                                     style="position: absolute; width: 220px; left:100px; top:0px">
-                                                    <li href="/" style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;">a1
+                                                    {{#each categories}}
+                                                    <li style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
+                                             border-radius: 5px;background-color: #fff;"><a
+                                                            href="/list-courses?filterByCategory={{_id}}">{{name}}</a>
                                                     </li>
-                                                    <li href="/" style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;">a2
-                                                    </li>
-                                                    <li href="/" style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;">a3
-                                                    </li>
-                                                    <li href="/" style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;">a4
-                                                    </li>
+                                                    {{/each}}
                                                 </ul>
                                             </li>
                                             <li id="dropdownChildTeachers" style="position: relative; color:#000; padding: 10px 15px; border-bottom: 1px solid #a2a2a2; border-left: 1px solid #a2a2a2; border-right: 1px solid #a2a2a2;
                                              border-radius: 5px; background-color: #fff;">Teachers
                                                 <ul id="dropdownChildSubTeachers"
                                                     style="position: absolute; width: 220px; left:100px; top:0px">
-                                                    <li href="/" style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;">a1
+                                                    {{#each users}}
+                                                    <li style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
+                                             border-radius: 5px;background-color: #fff;"><a
+                                                            href="/list-courses?filterByUser={{_id}}">{{name}}</a>
                                                     </li>
-                                                    <li href="/" style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;">a2
-                                                    </li>
-                                                    <li href="/" style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;">a3
-                                                    </li>
-                                                    <li href="/" style="position: relative; color:#000; padding: 10px 15px; border: 1px solid #a2a2a2;
-                                             border-radius: 5px;background-color: #fff;">a4
-                                                    </li>
+                                                    {{/each}}
                                                 </ul>
                                             </li>
                                         </ul>
